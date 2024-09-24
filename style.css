@@ -75,12 +75,6 @@ small {
   font-size: 80%;
 }
 sub,
-sup {
-  font-size: 75%;
-  line-height: 0;
-  position: relative;
-  vertical-align: baseline;
-}
 sub {
   bottom: -0.25em;
 }
@@ -1620,22 +1614,40 @@ a {
   line-height: 1em;
 }
 
-.kretNoSelect {
+.ceeNoSelect {
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
 }
 
 .buttonclick {
-  transition: all 1s ease;
+  transition: all 0.1s ease-in-out;
   transform: scale(1);
 }
 
 .buttonclick:active {
-  transform: scale(1.5) perspective(1px);
+  transform: scale(1.1);
 }
 
-.kret-button {
+.buttonclick:active {
+  animation-duration: 0.2s;
+  animation-name: expand;
+  animation-fill-mode: forwards;
+}
+
+@keyframes expand {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.cee-button {
   align-items: center;
   background-color: red;
   border-radius: 12px;
@@ -1661,6 +1673,6 @@ a {
   touch-action: manipulation;
 }
 
-.kret-button:hover {
+.cee-button:hover {
   box-shadow: #121212 0 0 0 3px, transparent 0 0 0 0;
 }
