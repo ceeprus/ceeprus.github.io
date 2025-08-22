@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Okayu Clicker</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="shortcut icon" type="image" href="/img/okayu.png" />
+</head>
+
+<body style="background-color: #636f75">
+  <!-- Navbar -->
+  <div class="w3-top w3-animate-top w3-center ceeNoSelect">
+    <div class="w3-black w3-card">
+      <a href="/index.html" class="w3-bar-item w3-monospace w3-padding-large">Home</a>
+      <a href="/site/about.html" class="w3-bar-item w3-monospace w3-padding-large">About</a>
+      <a href="????????????" class="w3-bar-item w3-monospace w3-padding-large">404</a>
+    </div>
+
+    <div class="w3-centered">
+      <span id="Okayu">0</span> Okayu<br />
+      <span id="OkayuPerSecond">0</span> Okayu per second<br />
+      <br />
+      <br />
+      <br />
+
+      <div class="w3-centered ceeNoSelect buttonclick" onclick="addOkayu(CPower)">
+        <img draggable="false" src="/img/okayu.png" height="256" />
+      </div>
+
+      <br />
+      <br />
+
+      <div class="w3-centered cee-button" onclick="buyUpgrade(1)">
+        <button style="border: none; background: none">
+          Upgrade <span>$</span><span id="UpgradePrice1">5</span> Count [<span id="Upgrade1">0</span>]
+        </button>
+      </div>
+
+      <div class="w3-centered cee-button" onclick="buyUpgrade(2)">
+        <button style="border: none; background: none">
+          Upgrade2 <span>$</span><span id="UpgradePrice2">20</span> Count
+          [<span id="Upgrade2">0</span>]
+        </button>
+      </div>
+
+      <div class="w3-centered cee-button" onclick="buyUpgrade(3)">
+        <button style="border: none; background: none">
+          Upgrade3 <span>$</span><span id="UpgradePrice3">500</span> Count
+          [<span id="Upgrade3">0</span>]
+        </button>
+      </div>
+
+      <div class="w3-centered cee-button" onclick="buyUpgrade(4)">
+        <button style="border: none; background: none">
+          Upgrade4 <span>$</span><span id="UpgradePrice4">1000</span> Count
+          [<span id="Upgrade4">0</span>]
+        </button>
+      </div>
+
+      <div class="w3-centered cee-button" onclick="buyUpgrade(5)">
+        <button style="border: none; background: none">
+          Upgrade5 <span>$</span><span id="UpgradePrice5">2000</span> Count
+          [<span id="Upgrade5">0</span>]
+        </button>
+      </div>
+
+      <script>
+        // PRICE LIST
+        var CPower = 1;
+        var Okayu = 0;
+
+        var upgrades = [
+          { price: 5, count: 0, multiplier: 1.21, gain: 1 },
+          { price: 20, count: 0, multiplier: 1.22, gain: 5 },
+          { price: 500, count: 0, multiplier: 1.23, gain: 100 },
+          { price: 1000, count: 0, multiplier: 1.24, gain: 200 },
+          { price: 2000, count: 0, multiplier: 1.25, gain: 400 }
+        ];
+
+        function buyUpgrade(index) {
+          var upgrade = upgrades[index - 1];
+          if (Okayu >= upgrade.price) {
+            Okayu -= upgrade.price;
+            upgrade.count++;
+            upgrade.price = Math.round(upgrade.price * upgrade.multiplier);
+
+            updateDisplay();
+            updateOkayuPerSecond();
+          }
+        }
+
+        function addOkayu(amount) {
+          Okayu += amount;
+          updateDisplay();
+        }
+
+        function updateOkayuPerSecond() {
+          var OkayuPerSecond = upgrades.reduce((sum, upgrade) => sum + upgrade.count * upgrade.gain, 0);
+          document.getElementById("OkayuPerSecond").innerHTML = OkayuPerSecond;
+        }
+
+        function updateDisplay() {
+          document.getElementById("Okayu").innerHTML = Okayu;
+          upgrades.forEach((upgrade, index) => {
+            document.getElementById(`UpgradePrice${index + 1}`).innerHTML = upgrade.price;
+            document.getElementById(`Upgrade${index + 1}`).innerHTML = upgrade.count;
+          });
+        }
+
+        // GAIN LIST
+        setInterval(function () {
+          Okayu += upgrades.reduce((sum, upgrade) => sum + upgrade.count * upgrade.gain, 0);
+          updateDisplay();
+          document.title = Okayu + " Okayu ";
+        }, 1000);
+      </script>
+    </div>
+  </div>
+</body>
+
+</html>
