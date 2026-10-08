@@ -5,3 +5,5 @@
 *.png binary
 *.woff2 binary
 *.txt text eol=lf
+*.bin binary
+*.js text eol=lf

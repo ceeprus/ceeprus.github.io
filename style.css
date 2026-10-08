@@ -100,37 +100,53 @@ button:focus-visible {
   padding: 1px 0;
 }
 
-.bar a {
+.bar a,
+.bar button {
   position: relative;
   min-width: 44px;
   padding: 0 24px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
   text-align: center;
+  cursor: pointer;
 }
 
-.bar a::before {
+.bar a::before,
+.bar button::before {
   content: "";
   position: absolute;
   inset: -11px 0;
 }
 
-.bar a:focus-visible {
+.bar a:focus-visible,
+.bar button:focus-visible {
   outline-offset: 1px;
 }
 
+.bar a:hover,
+.bar button:hover {
+  color: var(--accent);
+}
+
 .bar a[aria-current="page"],
-.bar a.accent {
+.bar a.accent,
+.bar button[aria-pressed="true"] {
   color: var(--accent);
 }
 
 @media (max-width: 420px) {
-  .bar a {
-    padding: 0 14px;
+  .bar a,
+  .bar button {
+    padding: 0 12px;
   }
 }
 
 @media (max-width: 340px) {
-  .bar a {
-    padding: 0 12px;
+  .bar a,
+  .bar button {
+    padding: 0 8px;
   }
 }
 
@@ -330,3 +346,218 @@ pre {
     transition: none;
   }
 }
+
+.project-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--gap);
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+  --btn: var(--click);
+  --btn-hover: var(--click-hover);
+}
+
+.projects-dialog {
+  width: min(90vw, 22rem);
+  padding: 1.5rem;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+}
+
+.projects-dialog::backdrop {
+  background: rgb(0 0 0 / 0.7);
+}
+
+.projects-dialog form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.projects-dialog h2 {
+  margin: 0;
+  font: 700 1.2rem/1.2 var(--font);
+}
+
+.projects-dialog label {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.projects-dialog input {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: var(--bar);
+  color: var(--ink);
+  font: inherit;
+}
+
+.projects-dialog input[aria-invalid="true"] {
+  border-color: var(--action);
+  box-shadow: inset 0 0 0 1px var(--action);
+}
+
+.projects-message {
+  margin: 0;
+  min-height: 1.5em;
+}
+
+.projects-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.projects-actions button,
+.projects-keep {
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+}
+
+.projects-actions .projects-go,
+.projects-keep[aria-pressed="true"] {
+  border-color: var(--click);
+  background: var(--click);
+  color: var(--action-ink);
+  font-weight: 700;
+}
+
+.projects-actions button:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.atlas {
+  position: fixed;
+  inset: 24.5px 0 0 0;
+  background: var(--bg);
+  text-align: left;
+}
+
+.atlas .atlas-map {
+  position: absolute;
+  inset: 0;
+}
+
+.atlas-fog {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.atlas .atlas-lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.atlas-brush {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.6), inset 0 0 0 1px rgb(0 0 0 / 0.6);
+  pointer-events: none;
+}
+
+.atlas-status {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  max-width: calc(100% - 24px);
+  margin: 0;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  background: rgb(30 30 30 / 0.92);
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.atlas-status:empty {
+  display: none;
+}
+
+.atlas-tools {
+  position: absolute;
+  bottom: 40px;
+  left: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: calc(100% - 24px);
+  padding: 0.5rem;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  background: rgb(30 30 30 / 0.92);
+}
+
+.atlas-tools button {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 0.9rem;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+}
+
+.atlas-tools button[aria-pressed="true"] {
+  border-color: var(--click);
+  background: var(--click);
+  color: var(--action-ink);
+  font-weight: 700;
+}
+
+.atlas-tools button[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.atlas-size {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.atlas-size input {
+  width: 8rem;
+  accent-color: var(--click);
+}
+
+.atlas .maplibregl-ctrl-attrib.maplibregl-compact {
+  background: rgb(30 30 30 / 0.85);
+}
+
+.atlas .maplibregl-ctrl.maplibregl-ctrl-attrib,
+.atlas .maplibregl-ctrl.maplibregl-ctrl-attrib a {
+  color: var(--ink);
+}
+
+.atlas .maplibregl-ctrl-attrib-button {
+  filter: invert(1);
+}
+
+@media (max-width: 640px) {
+  .atlas-tools {
+    bottom: 64px;
+  }
+}
+
