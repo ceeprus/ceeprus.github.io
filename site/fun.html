@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Okayu Clicker</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#1e1e1e" />
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="icon" type="image/png" href="/img/okayu-square.png" />
+</head>
+
+<body class="ceeNoSelect">
+  <header class="bar ceeNoSelect">
+    <nav aria-label="Main">
+      <a href="/index.html">Home</a>
+      <a href="/site/about.html">About</a>
+      <a href="????????????">404</a>
+      <a href="/site/fun.html" aria-current="page">Okayu</a>
+      <a href="/site/cevap.html" tabindex="-1" aria-hidden="true"> </a>
+    </nav>
+    <h1 class="sr-only">Okayu Clicker</h1>
+  </header>
+
+  <main class="page stack">
+    <p class="stats">
+      <span id="Okayu">0</span> Okayu<br />
+      <span id="OkayuPerSecond">0</span> Okayu per second<br />
+      <span id="OkayuPerClick">1</span> Okayu per click
+    </p>
+
+    <button type="button" class="buttonclick ceeNoSelect" aria-label="Click Okayu" onclick="addOkayu(clickPower())">
+      <img draggable="false" src="/img/okayu.png" width="364" height="524" alt="" />
+    </button>
+
+    <div class="upgrades" id="PassiveUpgrades" role="group" aria-label="Okayu per second upgrades">
+      <button type="button" class="cee-button" aria-disabled="true" onclick="buyUpgrade(1)">
+        Upgrade $<span id="UpgradePrice1">5</span> Count [<span id="Upgrade1">0</span>]
+      </button>
+      <button type="button" class="cee-button" aria-disabled="true" onclick="buyUpgrade(2)">
+        Upgrade2 $<span id="UpgradePrice2">60</span> Count [<span id="Upgrade2">0</span>]
+      </button>
+      <button type="button" class="cee-button" aria-disabled="true" onclick="buyUpgrade(3)">
+        Upgrade3 $<span id="UpgradePrice3">800</span> Count [<span id="Upgrade3">0</span>]
+      </button>
+      <button type="button" class="cee-button" aria-disabled="true" onclick="buyUpgrade(4)">
+        Upgrade4 $<span id="UpgradePrice4">10,000</span> Count [<span id="Upgrade4">0</span>]
+      </button>
+      <button type="button" class="cee-button" aria-disabled="true" onclick="buyUpgrade(5)">
+        Upgrade5 $<span id="UpgradePrice5">150,000</span> Count [<span id="Upgrade5">0</span>]
+      </button>
+    </div>
+
+    <div class="upgrades click" id="ClickUpgrades" role="group" aria-label="Okayu per click upgrades">
+      <button type="button" class="cee-button" aria-disabled="true" onclick="buyClickUpgrade(1)">
+        Upgrade $<span id="ClickPrice1">5</span> Count [<span id="ClickCount1">0</span>]
+      </button>
+      <button type="button" class="cee-button" aria-disabled="true" onclick="buyClickUpgrade(2)">
+        Upgrade2 $<span id="ClickPrice2">60</span> Count [<span id="ClickCount2">0</span>]
+      </button>
+      <button type="button" class="cee-button" aria-disabled="true" onclick="buyClickUpgrade(3)">
+        Upgrade3 $<span id="ClickPrice3">800</span> Count [<span id="ClickCount3">0</span>]
+      </button>
+      <button type="button" class="cee-button" aria-disabled="true" onclick="buyClickUpgrade(4)">
+        Upgrade4 $<span id="ClickPrice4">10,000</span> Count [<span id="ClickCount4">0</span>]
+      </button>
+      <button type="button" class="cee-button" aria-disabled="true" onclick="buyClickUpgrade(5)">
+        Upgrade5 $<span id="ClickPrice5">150,000</span> Count [<span id="ClickCount5">0</span>]
+      </button>
+    </div>
+
+    <button type="button" class="reset" id="ResetButton" onclick="pressReset()" onblur="cancelReset()">Reset progress</button>
+    <p class="sr-only" id="ResetStatus" role="status"></p>
+  </main>
+
+  <script>
+    var Okayu = 0;
+    var lastTick = Date.now();
+    var lastSave = 0;
+    var SAVE_KEY = "okayu-save-v1";
+    var MAX_CATCH_UP_MS = 3600000;
+    var RESET_PRESSES = 3;
+    var RESET_WINDOW_MS = 5000;
+    var resetPresses = 0;
+    var resetTimer = null;
+
+    var upgrades = [
+      { basePrice: 5, growth: 1.15, gain: 1, count: 0 },
+      { basePrice: 60, growth: 1.15, gain: 6, count: 0 },
+      { basePrice: 800, growth: 1.15, gain: 50, count: 0 },
+      { basePrice: 10000, growth: 1.15, gain: 300, count: 0 },
+      { basePrice: 150000, growth: 1.15, gain: 2000, count: 0 }
+    ];
+
+    var clickUpgrades = [
+      { basePrice: 5, growth: 1.15, gain: 1, count: 0 },
+      { basePrice: 60, growth: 1.15, gain: 6, count: 0 },
+      { basePrice: 800, growth: 1.15, gain: 50, count: 0 },
+      { basePrice: 10000, growth: 1.15, gain: 300, count: 0 },
+      { basePrice: 150000, growth: 1.15, gain: 2000, count: 0 }
+    ];
+
+    var passiveButtons = document.querySelectorAll("#PassiveUpgrades .cee-button");
+    var clickButtons = document.querySelectorAll("#ClickUpgrades .cee-button");
+
+    function priceOf(upgrade) {
+      return Math.ceil(upgrade.basePrice * Math.pow(upgrade.growth, upgrade.count));
+    }
+
+    function totalGain(list) {
+      return list.reduce((sum, upgrade) => sum + upgrade.count * upgrade.gain, 0);
+    }
+
+    function okayuPerSecond() {
+      return totalGain(upgrades);
+    }
+
+    function clickPower() {
+      return 1 + totalGain(clickUpgrades);
+    }
+
+    function format(amount) {
+      return Math.floor(amount).toLocaleString("en-US");
+    }
+
+    function buy(list, index) {
+      var upgrade = list[index - 1];
+      var price = priceOf(upgrade);
+      if (Okayu >= price) {
+        Okayu -= price;
+        upgrade.count++;
+        updateDisplay();
+        save();
+      }
+    }
+
+    function buyUpgrade(index) {
+      buy(upgrades, index);
+    }
+
+    function buyClickUpgrade(index) {
+      buy(clickUpgrades, index);
+    }
+
+    function addOkayu(amount) {
+      Okayu += amount;
+      updateDisplay();
+    }
+
+    function showUpgrades(list, buttons, priceId, countId) {
+      list.forEach((upgrade, index) => {
+        var price = priceOf(upgrade);
+        document.getElementById(priceId + (index + 1)).textContent = format(price);
+        document.getElementById(countId + (index + 1)).textContent = format(upgrade.count);
+        buttons[index].setAttribute("aria-disabled", String(Okayu < price));
+      });
+    }
+
+    function updateDisplay() {
+      document.getElementById("Okayu").textContent = format(Okayu);
+      document.getElementById("OkayuPerSecond").textContent = format(okayuPerSecond());
+      document.getElementById("OkayuPerClick").textContent = format(clickPower());
+      showUpgrades(upgrades, passiveButtons, "UpgradePrice", "Upgrade");
+      showUpgrades(clickUpgrades, clickButtons, "ClickPrice", "ClickCount");
+    }
+
+    function save() {
+      lastSave = Date.now();
+      try {
+        localStorage.setItem(SAVE_KEY, JSON.stringify({
+          Okayu: Okayu,
+          counts: upgrades.map(upgrade => upgrade.count),
+          clickCounts: clickUpgrades.map(upgrade => upgrade.count),
+          savedAt: lastTick
+        }));
+      } catch (error) {
+      }
+    }
+
+    function restoreCounts(list, counts) {
+      list.forEach((upgrade, index) => {
+        var count = Array.isArray(counts) ? counts[index] : 0;
+        upgrade.count = Number.isSafeInteger(count) && count > 0 ? Math.min(count, 1000) : 0;
+      });
+    }
+
+    function load() {
+      try {
+        var data = JSON.parse(localStorage.getItem(SAVE_KEY));
+        if (!data || !Number.isFinite(data.Okayu) || !Array.isArray(data.counts)) return;
+        Okayu = Math.max(0, data.Okayu);
+        restoreCounts(upgrades, data.counts);
+        restoreCounts(clickUpgrades, data.clickCounts);
+        if (Number.isFinite(data.savedAt)) lastTick = Math.min(data.savedAt, Date.now());
+      } catch (error) {
+      }
+    }
+
+    function resetLabel() {
+      var left = RESET_PRESSES - resetPresses;
+      if (left === RESET_PRESSES) return "Reset progress";
+      return "Are you sure? Press " + left + " more " + (left === 1 ? "time" : "times");
+    }
+
+    function showReset(status) {
+      var button = document.getElementById("ResetButton");
+      button.textContent = resetLabel();
+      if (resetPresses > 0) button.setAttribute("data-armed", "");
+      else button.removeAttribute("data-armed");
+      if (status) document.getElementById("ResetStatus").textContent = status;
+    }
+
+    function cancelReset() {
+      if (resetPresses === 0) return;
+      clearTimeout(resetTimer);
+      resetPresses = 0;
+      showReset("Reset cancelled.");
+    }
+
+    function resetProgress() {
+      Okayu = 0;
+      upgrades.forEach(upgrade => upgrade.count = 0);
+      clickUpgrades.forEach(upgrade => upgrade.count = 0);
+      lastTick = Date.now();
+      updateDisplay();
+      save();
+    }
+
+    function pressReset() {
+      clearTimeout(resetTimer);
+      resetPresses++;
+      if (resetPresses >= RESET_PRESSES) {
+        resetPresses = 0;
+        resetProgress();
+        showReset("Progress reset.");
+        return;
+      }
+      showReset(resetLabel());
+      resetTimer = setTimeout(cancelReset, RESET_WINDOW_MS);
+    }
+
+    setInterval(function () {
+      var now = Date.now();
+      var seconds = Math.max(0, Math.min(now - lastTick, MAX_CATCH_UP_MS)) / 1000;
+      lastTick = now;
+      Okayu += okayuPerSecond() * seconds;
+      updateDisplay();
+      document.title = format(Okayu) + " Okayu ";
+      if (now < lastSave || now - lastSave > 5000) save();
+    }, 250);
+
+    window.addEventListener("pagehide", save);
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) save();
+    });
+    window.addEventListener("storage", function (event) {
+      if (event.key === SAVE_KEY) {
+        load();
+        updateDisplay();
+      }
+    });
+
+    load();
+    updateDisplay();
+  </script>
+</body>
+
+</html>
