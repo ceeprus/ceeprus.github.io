@@ -15,6 +15,9 @@
   var atlas = null;
   var launch = 0;
   var assets = null;
+  var meet = null;
+  var meetLaunch = 0;
+  var meetAssets = null;
   var dialog = null;
   var form = null;
   var input = null;
@@ -146,14 +149,50 @@
     }
   }
 
+  function loadMeet() {
+    if (!meetAssets) {
+      meetAssets = addTag("script", { src: "/js/meet-core.js" })
+        .then(function () { return import("/js/meet.js"); })
+        .catch(function (error) {
+          meetAssets = null;
+          throw error;
+        });
+    }
+    return meetAssets;
+  }
+
+  function startMeet(area) {
+    var id = ++meetLaunch;
+    loadMeet()
+      .then(function (module) {
+        if (id !== meetLaunch) return;
+        meet = module.start(area);
+      })
+      .catch(function () {
+        area.querySelector('[data-meet="status"]').textContent = "Could not load Meet. Check your connection.";
+      });
+  }
+
+  function stopMeet() {
+    meetLaunch++;
+    if (meet) {
+      meet.stop();
+      meet = null;
+    }
+  }
+
   function show(name, focus) {
     stopAtlas();
+    stopMeet();
+    if (name !== "meet" && location.hash) history.replaceState(null, "", location.pathname);
     var holder = document.createElement("template");
     holder.innerHTML = views[name];
     var main = document.querySelector("main");
     main.replaceChildren(holder.content);
     var area = main.querySelector(".atlas");
     if (area) startAtlas(area);
+    var board = main.querySelector(".meet");
+    if (board) startMeet(board);
     var heading = main.querySelector("h2");
     if (focus && heading) heading.focus({ preventScroll: true });
   }
@@ -162,11 +201,12 @@
     views = JSON.parse(new TextDecoder().decode(buffer)).views;
     unlocked = true;
     button.setAttribute("aria-pressed", "true");
-    show("index", false);
+    show(/^#e=/.test(location.hash) && views.meet ? "meet" : "index", false);
   }
 
   function lock() {
     stopAtlas();
+    stopMeet();
     views = null;
     unlocked = false;
     kept = false;
