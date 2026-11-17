@@ -131,8 +131,7 @@ button:focus-visible {
 }
 
 .bar a[aria-current="page"],
-.bar a.accent,
-.bar button[aria-pressed="true"] {
+.bar a.accent {
   color: var(--accent);
 }
 
@@ -357,85 +356,6 @@ pre {
   list-style: none;
   --btn: var(--click);
   --btn-hover: var(--click-hover);
-}
-
-.projects-dialog {
-  width: min(90vw, 22rem);
-  padding: 1.5rem;
-  border: 1px solid var(--rule);
-  border-radius: 12px;
-  background: var(--bg);
-  color: var(--ink);
-  font: inherit;
-  text-align: left;
-}
-
-.projects-dialog::backdrop {
-  background: rgb(0 0 0 / 0.7);
-}
-
-.projects-dialog form {
-  display: grid;
-  gap: 0.75rem;
-}
-
-.projects-dialog h2 {
-  margin: 0;
-  font: 700 1.2rem/1.2 var(--font);
-}
-
-.projects-dialog label {
-  display: grid;
-  gap: 0.35rem;
-}
-
-.projects-dialog input {
-  padding: 0.5rem 0.75rem;
-  border: 1px solid var(--rule);
-  border-radius: 8px;
-  background: var(--bar);
-  color: var(--ink);
-  font: inherit;
-}
-
-.projects-dialog input[aria-invalid="true"] {
-  border-color: var(--action);
-  box-shadow: inset 0 0 0 1px var(--action);
-}
-
-.projects-message {
-  margin: 0;
-  min-height: 1.5em;
-}
-
-.projects-actions {
-  display: flex;
-  gap: 0.5rem;
-  justify-content: flex-end;
-}
-
-.projects-actions button,
-.projects-keep {
-  padding: 0.6rem 1rem;
-  border: 1px solid var(--rule);
-  border-radius: 12px;
-  background: transparent;
-  color: var(--ink);
-  font: inherit;
-  cursor: pointer;
-}
-
-.projects-actions .projects-go,
-.projects-keep[aria-pressed="true"] {
-  border-color: var(--click);
-  background: var(--click);
-  color: var(--action-ink);
-  font-weight: 700;
-}
-
-.projects-actions button:disabled {
-  cursor: default;
-  opacity: 0.6;
 }
 
 .atlas {
