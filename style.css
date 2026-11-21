@@ -1571,6 +1571,10 @@ a.cee-button {
   cursor: pointer;
 }
 
+.mtg-search span {
+  white-space: nowrap;
+}
+
 .mtg-search input {
   flex: 1 1 auto;
   min-width: 0;
@@ -1659,12 +1663,8 @@ a.cee-button {
   font: 700 1.2rem/1.3 var(--font-head);
 }
 
-.mtg-rules .mtg-jump {
-  margin-top: 0;
-}
-
-.mtg-rules .mtg-group:first-of-type h3 {
-  margin-top: 1rem;
+.mtg-rules .mtg-group h3 {
+  margin-top: 1.5rem;
 }
 
 .mtg-card-form {
@@ -1977,34 +1977,105 @@ a.cee-button {
   }
 }
 
-.mtg-jump {
+.mtg-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 0 1rem;
-  margin-top: 0.5rem;
+  gap: 0.5rem;
 }
 
-.mtg-jump a {
+.mtg-chips button {
   display: inline-flex;
   align-items: center;
+  gap: 0.5rem;
   min-height: 44px;
+  padding: 0 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+@media (max-width: 600px) {
+  .mtg-chips {
+    flex-wrap: nowrap;
+    margin-inline: calc(-1 * var(--gap));
+    padding: 0 var(--gap) 0.25rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .mtg-chips button {
+    flex: none;
+  }
+}
+
+.mtg-chips span {
+  color: var(--muted);
+  font-size: 0.85em;
+  font-variant-numeric: tabular-nums;
+  transition: color 0.15s ease;
+}
+
+.mtg-chips button[aria-pressed="true"] {
+  border-color: var(--click);
+  background: var(--click);
+  color: var(--action-ink);
+  font-weight: 700;
+}
+
+.mtg-chips button[aria-pressed="true"] span {
+  color: var(--action-ink);
+}
+
+.mtg-chips button[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.mtg-chips button:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .mtg-chips button:not([aria-pressed="true"]):not([aria-disabled="true"]):hover {
+    border-color: var(--click-hover);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mtg-chips button {
+    transition: none;
+  }
 }
 
 .mtg-empty {
-  margin: 0.75rem 0 0;
+  margin: 1rem 0 0;
 }
 
-.mtg-group,
 .mtg-entry a {
   scroll-margin-top: 4.5rem;
 }
 
 .mtg-group h3 {
-  margin: 2rem 0 0.5rem;
-  padding-bottom: 0.25rem;
-  border-bottom: 1px solid var(--rule);
-  font: 700 1.2rem/1.3 var(--font-head);
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin: 2rem 0 0.25rem;
+  font: 700 1.1rem/1.3 var(--font-head);
   text-wrap: balance;
+}
+
+.mtg-group h3::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid var(--line);
 }
 
 .mtg dl {
@@ -2012,20 +2083,29 @@ a.cee-button {
 }
 
 .mtg-entry {
-  padding: 0.5rem 0;
+  padding: 0.65rem 0;
+}
+
+.mtg-entry + .mtg-entry {
+  border-top: 1px solid rgb(255 255 255 / 0.06);
 }
 
 .mtg-entry dt {
-  color: var(--accent);
+  color: var(--click-hover);
   font-weight: 700;
 }
 
 .mtg-entry dd {
-  margin: 0;
+  margin: 0.15rem 0 0;
   text-wrap: pretty;
 }
 
 .mtg-entry dd a {
-  color: var(--rule);
+  margin-left: 0.25rem;
+  color: var(--muted);
   font-size: 0.85em;
+}
+
+.mtg-entry dd a:hover {
+  color: var(--click-hover);
 }

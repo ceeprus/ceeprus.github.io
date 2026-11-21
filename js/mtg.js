@@ -226,7 +226,9 @@
       });
       details.appendChild(ul);
     }).catch(function (error) {
-      if (error.name !== "AbortError") summary.textContent = "Official rulings (could not load)";
+      if (error.name === "AbortError") return;
+      summary.textContent = "Official rulings (could not load, close and open to retry)";
+      delete details.dataset.loaded;
     });
   }
 
@@ -241,9 +243,8 @@
     var suggest = null;
     var lookup = null;
     var active = -1;
-    var stopped = false;
 
-    loadSymbols().then(function (map) { if (!stopped) decorate(area, map); });
+    loadSymbols().then(function (map) { decorate(area, map); });
 
     function options() {
       return list.querySelectorAll('[role="option"]');
@@ -331,7 +332,12 @@
           status.textContent = "";
           slot.replaceChildren(render(results[0], results[1]));
           slot.hidden = false;
-          fillRulings(slot.querySelector(".mtg-rulings"), results[1], signal);
+          var rulings = slot.querySelector(".mtg-rulings");
+          rulings.addEventListener("toggle", function () {
+            if (!rulings.open || rulings.dataset.loaded) return;
+            rulings.dataset.loaded = "true";
+            fillRulings(rulings, results[1], signal);
+          });
         })
         .catch(function (error) {
           if (error.name === "AbortError") return;
@@ -425,21 +431,6 @@
     list.addEventListener("click", onListClick);
     more.addEventListener("click", onMoreClick);
     form.addEventListener("submit", onSubmit);
-
-    return {
-      stop: function () {
-        stopped = true;
-        cancelSuggest();
-        if (lookup) lookup.abort();
-        input.removeEventListener("input", onInput);
-        input.removeEventListener("keydown", onKey);
-        input.removeEventListener("blur", onBlur);
-        list.removeEventListener("pointerdown", onListDown);
-        list.removeEventListener("click", onListClick);
-        more.removeEventListener("click", onMoreClick);
-        form.removeEventListener("submit", onSubmit);
-      }
-    };
   }
 
   window.MtgLookup = { start: start, closest: closest, distance: distance };

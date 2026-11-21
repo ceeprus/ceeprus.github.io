@@ -210,12 +210,10 @@
     ring.hidden = true;
     rootEl.insertBefore(ring, statusEl);
     var bar = document.querySelector(".bar");
-    var barWatch = null;
     var lastSig = "";
     var map = null;
     var linesMap = null;
     var parts = null;
-    var stopped = false;
     var busy = false;
 
     function fitBar() {
@@ -290,7 +288,7 @@
     }
 
     function rebuild() {
-      if (stopped || !map) return;
+      if (!map) return;
       var view = currentView();
       fit(view);
       paintMask(baseCtx, ops, view);
@@ -298,7 +296,7 @@
     }
 
     function sync() {
-      if (stopped || !map) return;
+      if (!map) return;
       var center = map.getCenter();
       var signature = [center.lng, center.lat, map.getZoom(), mapEl.clientWidth, mapEl.clientHeight].join();
       if (signature === lastSig) return;
@@ -525,7 +523,6 @@
         ]);
         var base = shots[0];
         var borders = shots[1];
-        if (stopped) return;
         var out = makeCanvas(EXPORT_SIZE, EXPORT_SIZE);
         var octx = out.getContext("2d");
         octx.drawImage(base.canvas, 0, 0);
@@ -604,9 +601,8 @@
     } catch (error) {
       setTransient("");
       setError(TEXT.tiles);
-      return { stop: function () { stopped = true; } };
+      return;
     }
-    if (stopped) return { stop: function () {} };
 
     try {
       map = new root.maplibregl.Map({
@@ -625,7 +621,7 @@
     } catch (error) {
       setTransient("");
       setError(/webgl/i.test(String(error && error.message)) ? TEXT.webgl : TEXT.tiles);
-      return { stop: function () { stopped = true; } };
+      return;
     }
 
     if (linesEl && parts.lines.layers.length) {
@@ -655,8 +651,7 @@
     container.addEventListener("pointerleave", onLeave);
     container.addEventListener("contextmenu", blockMenu);
     if (bar && root.ResizeObserver) {
-      barWatch = new root.ResizeObserver(fitBar);
-      barWatch.observe(bar);
+      new root.ResizeObserver(fitBar).observe(bar);
     }
 
     map.on("render", sync);
@@ -674,28 +669,6 @@
     });
     setMode("move");
     sync();
-
-    return {
-      stop: function () {
-        stopped = true;
-        container.removeEventListener("pointerdown", onDown);
-        container.removeEventListener("pointermove", onMove);
-        container.removeEventListener("pointerup", onUp);
-        container.removeEventListener("pointercancel", onCancel);
-        container.removeEventListener("pointerleave", onLeave);
-        container.removeEventListener("contextmenu", blockMenu);
-        ring.remove();
-        if (barWatch) barWatch.disconnect();
-        if (linesMap) {
-          linesMap.remove();
-          linesMap = null;
-        }
-        map.remove();
-        map = null;
-        ctx.clearRect(0, 0, fogEl.width, fogEl.height);
-        statusEl.textContent = "";
-      }
-    };
   }
 
   root.Atlas = { start: start };

@@ -29,8 +29,8 @@
       <div class="mtg-top">
         <a class="reset" href="/site/projects.html">Back</a>
         <label class="mtg-search">
-          <span>Rules</span>
-          <input type="search" data-mtg="filter" placeholder="e.g. trample" autocomplete="off">
+          <span>Search rules</span>
+          <input type="search" data-mtg="filter" placeholder="trample" autocomplete="off">
         </label>
       </div>
       <details class="mtg-lookup mtg-fold" data-fold="lookup" open>
@@ -49,21 +49,22 @@
       </details>
       <details class="mtg-rules mtg-fold" data-mtg="rules" data-fold="rules" open>
       <summary><h3>Rules</h3></summary>
-      <nav class="mtg-jump" aria-label="Groups">
-        <a href="#mtg-turn">Turn and game</a>
-        <a href="#mtg-stack">Stack and timing</a>
-        <a href="#mtg-combat">Combat</a>
-        <a href="#mtg-keywords">Keywords</a>
-        <a href="#mtg-actions">Keyword actions</a>
-        <a href="#mtg-types">Card types</a>
-        <a href="#mtg-zones">Cards and zones</a>
-        <a href="#mtg-mana">Mana and color</a>
-        <a href="#mtg-formats">Formats</a>
-        <a href="#mtg-commander">Commander</a>
-        <a href="#mtg-deck">Deckbuilding</a>
-        <a href="#mtg-slang">Slang</a>
-        <a href="#mtg-advanced">Advanced rules</a>
-      </nav>
+      <div class="mtg-chips" role="group" aria-label="Show group">
+        <button type="button" data-group="all" aria-pressed="true">All <span>210</span></button>
+        <button type="button" data-group="turn" aria-pressed="false">Turn and game <span>12</span></button>
+        <button type="button" data-group="stack" aria-pressed="false">Stack and timing <span>16</span></button>
+        <button type="button" data-group="combat" aria-pressed="false">Combat <span>12</span></button>
+        <button type="button" data-group="keywords" aria-pressed="false">Keywords <span>34</span></button>
+        <button type="button" data-group="actions" aria-pressed="false">Keyword actions <span>14</span></button>
+        <button type="button" data-group="types" aria-pressed="false">Card types <span>22</span></button>
+        <button type="button" data-group="zones" aria-pressed="false">Cards and zones <span>14</span></button>
+        <button type="button" data-group="mana" aria-pressed="false">Mana and color <span>11</span></button>
+        <button type="button" data-group="formats" aria-pressed="false">Formats <span>11</span></button>
+        <button type="button" data-group="commander" aria-pressed="false">Commander <span>14</span></button>
+        <button type="button" data-group="deck" aria-pressed="false">Deckbuilding <span>11</span></button>
+        <button type="button" data-group="slang" aria-pressed="false">Slang <span>16</span></button>
+        <button type="button" data-group="advanced" aria-pressed="false">Advanced rules <span>23</span></button>
+      </div>
       <p class="mtg-empty" data-mtg="empty" hidden>No match.</p>
       <p class="sr-only" data-mtg="count" role="status"></p>
 

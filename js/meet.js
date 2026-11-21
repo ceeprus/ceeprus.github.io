@@ -190,7 +190,6 @@ export function start(area) {
   var reach = 0;
   var base = [];
   var opening = 0;
-  var alive = true;
   var pic = isPic(recall(PIC_KEY)) ? recall(PIC_KEY) : "";
   var thisMonth = today().slice(0, 8) + "01";
   var month = thisMonth;
@@ -214,7 +213,7 @@ export function start(area) {
     store = connect(JSON.parse(area.dataset.config));
   } catch (error) {
     say("Meet is not set up yet.");
-    return { stop: function () {} };
+    return;
   }
 
   function ended(data) {
@@ -715,7 +714,6 @@ export function start(area) {
         created: serverTimestamp(),
         expireAt: Timestamp.fromMillis(M.expiry(shape, Date.now(), WEEKLY_DAYS))
       });
-      if (!alive) return;
       create.reset();
       chosen = { dates: {}, week: {} };
       location.hash = "#e=" + ref.id;
@@ -736,10 +734,10 @@ export function start(area) {
     try {
       snap = await getDoc(doc(store, "events", next));
     } catch (error) {
-      if (alive) say("Could not load the event. Try again later.");
+      say("Could not load the event. Try again later.");
       return;
     }
-    if (!alive || ticket !== opening || eventId() !== next) return;
+    if (ticket !== opening || eventId() !== next) return;
     if (!snap.exists()) {
       showCreate();
       say("This event doesn't exist. Check the link.");
@@ -747,7 +745,7 @@ export function start(area) {
     }
     if (ended(snap.data())) {
       var gone = await remove(snap.ref).then(function () { return true; }, function () { return false; });
-      if (!alive || ticket !== opening || eventId() !== next) return;
+      if (ticket !== opening || eventId() !== next) return;
       if (gone) {
         showCreate();
         say("This event has ended.");
@@ -805,7 +803,7 @@ export function start(area) {
     if (next === event.title) return;
     event.title = next;
     updateDoc(doc(store, "events", id), { title: next }).catch(function () {
-      if (alive) say("Could not rename the event. Reload the page and try again.");
+      say("Could not rename the event. Reload the page and try again.");
     });
   }
 
@@ -1067,7 +1065,6 @@ export function start(area) {
     if (event.expireAt) record.expireAt = event.expireAt;
     people[key] = { name: me, free: record.free, pic: pic };
     setDoc(doc(store, "events", id, "people", key), record).catch(function (error) {
-      if (!alive) return;
       if (error && error.code === "permission-denied") say("Could not save. Reload the page and try again.");
       else say("Could not save. Check your connection.");
     });
@@ -1264,16 +1261,4 @@ export function start(area) {
   window.addEventListener("pagehide", flush);
   document.addEventListener("visibilitychange", onHide);
   route();
-
-  return {
-    stop: function () {
-      alive = false;
-      closeEvent();
-      clearTimeout(copyTimer);
-      window.removeEventListener("hashchange", route);
-      window.removeEventListener("pagehide", flush);
-      document.removeEventListener("visibilitychange", onHide);
-      document.removeEventListener("pointerdown", onOutside);
-    }
-  };
 }
