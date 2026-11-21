@@ -50,18 +50,18 @@
       <details class="mtg-rules mtg-fold" data-mtg="rules" data-fold="rules" open>
       <summary><h3>Rules</h3></summary>
       <div class="mtg-chips" role="group" aria-label="Show group">
-        <button type="button" data-group="all" aria-pressed="true">All <span>210</span></button>
-        <button type="button" data-group="turn" aria-pressed="false">Turn and game <span>12</span></button>
+        <button type="button" data-group="all" aria-pressed="true">All <span>231</span></button>
+        <button type="button" data-group="turn" aria-pressed="false">Turn and game <span>16</span></button>
         <button type="button" data-group="stack" aria-pressed="false">Stack and timing <span>16</span></button>
-        <button type="button" data-group="combat" aria-pressed="false">Combat <span>12</span></button>
+        <button type="button" data-group="combat" aria-pressed="false">Combat <span>15</span></button>
         <button type="button" data-group="keywords" aria-pressed="false">Keywords <span>34</span></button>
         <button type="button" data-group="actions" aria-pressed="false">Keyword actions <span>14</span></button>
         <button type="button" data-group="types" aria-pressed="false">Card types <span>22</span></button>
         <button type="button" data-group="zones" aria-pressed="false">Cards and zones <span>14</span></button>
-        <button type="button" data-group="mana" aria-pressed="false">Mana and color <span>11</span></button>
-        <button type="button" data-group="formats" aria-pressed="false">Formats <span>11</span></button>
+        <button type="button" data-group="mana" aria-pressed="false">Mana and color <span>16</span></button>
+        <button type="button" data-group="formats" aria-pressed="false">Formats <span>16</span></button>
         <button type="button" data-group="commander" aria-pressed="false">Commander <span>14</span></button>
-        <button type="button" data-group="deck" aria-pressed="false">Deckbuilding <span>11</span></button>
+        <button type="button" data-group="deck" aria-pressed="false">Deckbuilding <span>15</span></button>
         <button type="button" data-group="slang" aria-pressed="false">Slang <span>16</span></button>
         <button type="button" data-group="advanced" aria-pressed="false">Advanced rules <span>23</span></button>
       </div>
@@ -83,6 +83,10 @@
           <div class="mtg-entry"><dt>How you lose</dt><dd>0 or less life. Drawing from an empty library. 10 poison counters. In Commander, also 21 combat damage from one commander. <a href="https://mtg.wiki/page/Losing_the_game" target="_blank" rel="noopener">wiki</a></dd></div>
           <div class="mtg-entry"><dt>Both hit 0 at once</dt><dd>If every remaining player loses at the same time, the game is a draw. <a href="https://mtg.wiki/page/Draw" target="_blank" rel="noopener">wiki</a></dd></div>
           <div class="mtg-entry"><dt>Passing the turn</dt><dd>Saying "go" or "pass" means you're done with your main phase and want to move to your end step. <a href="https://mtg.wiki/page/Turn_structure" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Draw step</dt><dd>Draw a card at the start of it. Drawing from an empty library makes you lose the game. <a href="https://mtg.wiki/page/Draw_step" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Main phases</dt><dd>Two per turn, before and after combat. Creatures, sorceries and your land only go there, with the stack empty. <a href="https://mtg.wiki/page/Main_phase" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Extra turns</dt><dd>Taken right after the current turn. If several are made, the newest one happens first. <a href="https://mtg.wiki/page/Extra_turn" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Conceding</dt><dd>You can concede at any time. In multiplayer the game goes on without you. <a href="https://mtg.wiki/page/Concede" target="_blank" rel="noopener">wiki</a></dd></div>
         </dl>
       </section>
 
@@ -123,6 +127,9 @@
           <div class="mtg-entry"><dt>Tapping a blocker</dt><dd>Tapping a creature after it blocked doesn't remove it from combat. It still deals damage. <a href="https://mtg.wiki/page/Block" target="_blank" rel="noopener">wiki</a></dd></div>
           <div class="mtg-entry"><dt>First strike step</dt><dd>If any creature has first strike or double strike, combat damage happens in two steps. <a href="https://mtg.wiki/page/First_strike" target="_blank" rel="noopener">wiki</a></dd></div>
           <div class="mtg-entry"><dt>Planeswalker damage</dt><dd>Damage to a planeswalker removes that many loyalty counters. At 0 loyalty it dies. <a href="https://mtg.wiki/page/Planeswalker" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Defending player</dt><dd>The player being attacked. In multiplayer, each attacker can attack a different player. <a href="https://mtg.wiki/page/Defending_player" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Several blockers</dt><dd>More than one creature can block the same attacker. The attacker's controller splits its damage among them however they like. <a href="https://mtg.wiki/page/Block" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Damage is simultaneous</dt><dd>All combat damage is dealt at the same time, unless first strike or double strike adds an earlier damage step. <a href="https://mtg.wiki/page/Combat_damage_step" target="_blank" rel="noopener">wiki</a></dd></div>
         </dl>
       </section>
 
@@ -248,6 +255,11 @@
           <div class="mtg-entry"><dt>Color identity</dt><dd>All mana symbols in a card's cost and rules text. Commander uses it for deckbuilding. <a href="https://mtg.wiki/page/Color_identity" target="_blank" rel="noopener">wiki</a></dd></div>
           <div class="mtg-entry"><dt>Devotion</dt><dd>Count of a color's mana symbols in the costs of permanents you control. <a href="https://mtg.wiki/page/Devotion" target="_blank" rel="noopener">wiki</a></dd></div>
           <div class="mtg-entry"><dt>Guild and color pair names</dt><dd>Azorius WU, Dimir UB, Rakdos BR, Gruul RG, Selesnya GW, Orzhov WB, Izzet UR, Golgari BG, Boros RW, Simic GU. <a href="https://mtg.wiki/page/Guild" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Multicolored</dt><dd>A card with two or more colors, also called gold. <a href="https://mtg.wiki/page/Multicolored" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Mana fixing</dt><dd>Lands and spells that make more than one color, so a multicolor deck can cast its cards. <a href="https://mtg.wiki/page/Mana_fixing" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Dual lands</dt><dd>Lands that tap for two colors. Most enter tapped or cost life to stay fair. <a href="https://mtg.wiki/page/Dual_land" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Snow mana</dt><dd>{S} is paid with mana made by a snow permanent, usually a snow land. <a href="https://mtg.wiki/page/Snow" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Hybrid in Commander</dt><dd>A hybrid symbol counts as both colors for color identity, so {R/W} needs a commander with red and white. <a href="https://mtg.wiki/page/Hybrid_mana" target="_blank" rel="noopener">wiki</a></dd></div>
         </dl>
       </section>
 
@@ -265,6 +277,11 @@
           <div class="mtg-entry"><dt>Sealed</dt><dd>Open six packs and build a 40-card deck from them. <a href="https://mtg.wiki/page/Sealed_Deck" target="_blank" rel="noopener">wiki</a></dd></div>
           <div class="mtg-entry"><dt>Limited vs constructed</dt><dd>Limited: deck built from packs opened at the event. Constructed: deck built beforehand from any legal cards. <a href="https://mtg.wiki/page/Limited" target="_blank" rel="noopener">wiki</a></dd></div>
           <div class="mtg-entry"><dt>Banned and restricted</dt><dd>Banned cards can't be in the deck at all. Restricted (Vintage) means one copy max. <a href="https://mtg.wiki/page/Banned" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Rotation</dt><dd>Once a year the oldest sets leave Standard as new ones arrive. <a href="https://mtg.wiki/page/Rotation" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Brawl</dt><dd>Commander-style singleton format played mostly on MTG Arena, with a smaller card pool. <a href="https://mtg.wiki/page/Brawl" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Alchemy and Timeless</dt><dd>MTG Arena formats. Alchemy adds digital-only and rebalanced cards. Timeless allows nearly every Arena card. <a href="https://mtg.wiki/page/Alchemy" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Cube</dt><dd>A hand-picked set of cards, usually one of each, that a group drafts instead of booster packs. <a href="https://mtg.wiki/page/Cube" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Two-Headed Giant</dt><dd>Teams of two share 30 life and take their turns together. <a href="https://mtg.wiki/page/Two-Headed_Giant" target="_blank" rel="noopener">wiki</a></dd></div>
         </dl>
       </section>
 
@@ -302,6 +319,10 @@
           <div class="mtg-entry"><dt>Removal</dt><dd>Cards that deal with an opponent's threats: destroy, exile, damage, bounce. <a href="https://mtg.wiki/page/Removal" target="_blank" rel="noopener">wiki</a></dd></div>
           <div class="mtg-entry"><dt>Ramp</dt><dd>Getting more mana faster than normal: extra lands, mana creatures, Treasure. <a href="https://mtg.wiki/page/Ramp" target="_blank" rel="noopener">wiki</a></dd></div>
           <div class="mtg-entry"><dt>Win condition</dt><dd>The card or plan that actually ends the game. <a href="https://mtg.wiki/page/Win_condition" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Singleton</dt><dd>Only one copy of each card except basic lands. Commander and most cubes are singleton. <a href="https://mtg.wiki/page/Singleton" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Synergy</dt><dd>Cards that are stronger together than on their own. <a href="https://mtg.wiki/page/Synergy" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Splash</dt><dd>Adding a few cards of an extra color, with some fixing to cast them. <a href="https://mtg.wiki/page/Splash" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Goldfishing</dt><dd>Playing a deck alone for a few test games to see how it draws and curves out. <a href="https://mtg.wiki/page/Goldfishing" target="_blank" rel="noopener">wiki</a></dd></div>
         </dl>
       </section>
 
