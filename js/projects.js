@@ -111,5 +111,27 @@
     if (target && views[target.dataset.view]) show(target.dataset.view, true);
   });
 
+  main.addEventListener("input", function (event) {
+    if (!event.target.matches('[data-mtg="filter"]')) return;
+    var clean = function (text) { return text.toLowerCase().replace(/[\u2018\u2019]/g, "'").replace(/[^a-z0-9']+/g, " "); };
+    var words = clean(event.target.value).trim().split(/\s+/);
+    var shown = 0;
+    main.querySelectorAll(".mtg-group").forEach(function (group) {
+      var count = 0;
+      group.querySelectorAll(".mtg-entry").forEach(function (entry) {
+        var text = " " + clean(entry.textContent);
+        var hit = words.every(function (word) { return text.indexOf(" " + word) !== -1; });
+        entry.hidden = !hit;
+        if (hit) count++;
+      });
+      group.hidden = count === 0;
+      shown += count;
+    });
+    main.querySelector('[data-mtg="empty"]').hidden = shown > 0;
+    var searching = words.join("") !== "";
+    main.querySelector(".mtg-jump").hidden = searching;
+    main.querySelector('[data-mtg="count"]').textContent = searching ? shown + (shown === 1 ? " match" : " matches") : "";
+  });
+
   show(/^#e=/.test(location.hash) ? "meet" : "index", false);
 })();
