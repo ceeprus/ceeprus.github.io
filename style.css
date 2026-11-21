@@ -1515,6 +1515,18 @@ pre {
   max-width: 72ch;
   margin-inline: auto;
   text-align: left;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.mtg input,
+.mtg-entry dt,
+.mtg-entry dd,
+.mtg-face,
+.mtg-bracket p,
+.mtg-rulings li {
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 .mtg-top {
@@ -1564,25 +1576,65 @@ pre {
 .mtg input[type="search"]:focus-visible,
 .mtg-go:focus-visible,
 .mtg-choice:focus-visible,
-.mtg-rulings summary:focus-visible {
+.mtg-rulings summary:focus-visible,
+.mtg-fold > summary:focus-visible {
   outline: 3px solid var(--ink);
   outline-offset: 2px;
 }
 
+.mtg-fold > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 44px;
+  list-style: none;
+  cursor: pointer;
+}
+
+.mtg-fold > summary::-webkit-details-marker {
+  display: none;
+}
+
+.mtg-fold > summary::after {
+  content: "Show";
+  color: var(--muted);
+}
+
+.mtg-fold[open] > summary::after {
+  content: "Hide";
+}
+
+.mtg-fold > summary:hover::after {
+  color: var(--ink);
+}
+
+.mtg-fold h3 {
+  margin: 0;
+  font: 700 1.2rem/1.3 var(--font-head);
+}
+
 .mtg-lookup {
   margin-top: 1rem;
-  padding: var(--gap);
+  padding: 0.25rem var(--gap);
   border-radius: 12px;
   background: var(--surface);
 }
 
-.mtg-lookup h3 {
-  margin: 0 0 0.5rem;
-  font: 700 1.2rem/1.3 var(--font-head);
+.mtg-lookup[open] {
+  padding-bottom: var(--gap);
 }
 
-.mtg-lookup h3 label {
-  cursor: pointer;
+.mtg-lookup[open] > summary {
+  margin-bottom: 0.25rem;
+}
+
+.mtg-rules {
+  margin-top: 1rem;
+}
+
+.mtg-rules > summary {
+  border-bottom: 1px solid var(--rule);
 }
 
 .mtg-card-form {

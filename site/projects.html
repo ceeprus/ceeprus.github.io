@@ -201,11 +201,11 @@
           <input type="search" data-mtg="filter" placeholder="e.g. trample" autocomplete="off">
         </label>
       </div>
-      <section class="mtg-lookup">
-        <h3><label for="MtgCardInput">Card lookup</label></h3>
+      <details class="mtg-lookup mtg-fold" open>
+        <summary><h3>Card lookup</h3></summary>
         <form class="mtg-card-form" data-mtg="card-form" role="search">
           <div class="mtg-combo">
-            <input id="MtgCardInput" type="search" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="MtgCardList" data-mtg="card" placeholder="e.g. Sol Ring" autocomplete="off" spellcheck="false">
+            <input id="MtgCardInput" type="search" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="MtgCardList" aria-label="Card name" data-mtg="card" placeholder="e.g. Sol Ring" autocomplete="off" spellcheck="false">
             <ul id="MtgCardList" class="mtg-options" role="listbox" aria-label="Card names" data-mtg="names" hidden></ul>
           </div>
           <button type="submit" class="mtg-go">Look up</button>
@@ -214,7 +214,9 @@
         <div data-mtg="did-you-mean"></div>
         <div data-mtg="card-result" hidden></div>
         <p class="mtg-more">Card data and rulings from <a href="https://scryfall.com" target="_blank" rel="noopener">Scryfall</a>. Full rules: <a href="https://yawgatog.com/resources/magic-rules/" target="_blank" rel="noopener">Yawgatog</a>.</p>
-      </section>
+      </details>
+      <details class="mtg-rules mtg-fold" data-mtg="rules" open>
+      <summary><h3>Rules</h3></summary>
       <nav class="mtg-jump" aria-label="Groups">
         <a href="#mtg-turn">Turn and game</a>
         <a href="#mtg-stack">Stack and timing</a>
@@ -520,6 +522,7 @@
           <div class="mtg-entry"><dt>Commander changing zones</dt><dd>Going to graveyard or exile, it can move to the command zone right after, so "dies" still triggers. Hand or library: it's replaced instead. <a href="https://mtg.wiki/page/Command_zone" target="_blank" rel="noopener">wiki</a></dd></div>
         </dl>
       </section>
+      </details>
     </div>
   </template>
 </body>

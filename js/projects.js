@@ -116,6 +116,7 @@
     });
     main.querySelector('[data-mtg="empty"]').hidden = shown > 0;
     var searching = words.join("") !== "";
+    if (searching) main.querySelector('[data-mtg="rules"]').open = true;
     main.querySelector(".mtg-jump").hidden = searching;
     main.querySelector('[data-mtg="count"]').textContent = searching ? shown + (shown === 1 ? " match" : " matches") : "";
   });
