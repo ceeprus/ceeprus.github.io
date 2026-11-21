@@ -299,6 +299,11 @@ pre {
 
 .cee-button:hover {
   background: var(--btn-hover, var(--action-hover));
+  color: var(--action-ink);
+}
+
+a.cee-button {
+  text-decoration: none;
 }
 
 .upgrades.click {
@@ -427,7 +432,14 @@ pre {
   background: rgb(30 30 30 / 0.92);
 }
 
-.atlas-tools button {
+.atlas-tools a {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.atlas-tools button,
+.atlas-tools a {
   min-width: 44px;
   min-height: 44px;
   padding: 0 0.9rem;
@@ -1542,8 +1554,11 @@ pre {
 }
 
 .mtg-top .reset {
+  display: inline-flex;
+  align-items: center;
   margin: 0;
   min-height: 44px;
+  text-decoration: none;
 }
 
 .mtg-search {
@@ -1582,14 +1597,32 @@ pre {
   outline-offset: 2px;
 }
 
+.mtg-fold {
+  margin-top: 1rem;
+  padding: 0 var(--gap);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.mtg-fold[open] {
+  padding-bottom: var(--gap);
+}
+
 .mtg-fold > summary {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  min-height: 44px;
+  min-height: 52px;
+  margin: 0 calc(-1 * var(--gap));
+  padding: 0 var(--gap);
+  border-radius: 12px;
   list-style: none;
   cursor: pointer;
+}
+
+.mtg-fold[open] > summary {
+  margin-bottom: 0.25rem;
 }
 
 .mtg-fold > summary::-webkit-details-marker {
@@ -1597,16 +1630,28 @@ pre {
 }
 
 .mtg-fold > summary::after {
-  content: "Show";
-  color: var(--muted);
+  content: "";
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-right: 0.25rem;
+  border-right: 2px solid var(--muted);
+  border-bottom: 2px solid var(--muted);
+  transform: translateY(-25%) rotate(45deg);
 }
 
 .mtg-fold[open] > summary::after {
-  content: "Hide";
+  transform: translateY(25%) rotate(-135deg);
 }
 
-.mtg-fold > summary:hover::after {
-  color: var(--ink);
+@media (hover: hover) and (pointer: fine) {
+  .mtg-fold > summary:hover::after {
+    border-color: var(--ink);
+  }
+
+  .mtg-fold > summary:hover h3 {
+    color: var(--click-hover);
+  }
 }
 
 .mtg-fold h3 {
@@ -1614,27 +1659,12 @@ pre {
   font: 700 1.2rem/1.3 var(--font-head);
 }
 
-.mtg-lookup {
+.mtg-rules .mtg-jump {
+  margin-top: 0;
+}
+
+.mtg-rules .mtg-group:first-of-type h3 {
   margin-top: 1rem;
-  padding: 0.25rem var(--gap);
-  border-radius: 12px;
-  background: var(--surface);
-}
-
-.mtg-lookup[open] {
-  padding-bottom: var(--gap);
-}
-
-.mtg-lookup[open] > summary {
-  margin-bottom: 0.25rem;
-}
-
-.mtg-rules {
-  margin-top: 1rem;
-}
-
-.mtg-rules > summary {
-  border-bottom: 1px solid var(--rule);
 }
 
 .mtg-card-form {

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Maps</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#1e1e1e" />
+  <link rel="stylesheet" href="/style.css" />
+  <script src="/js/projects.js" defer></script>
+  <link rel="icon" type="image/png" href="/img/favicon-white.png" />
+</head>
+
+<body>
+  <header class="bar ceeNoSelect">
+    <nav aria-label="Main">
+      <a href="/index.html">Home</a>
+      <a href="/site/about.html">About</a>
+      <a href="????????????">404</a>
+      <a href="/site/fun.html">Okayu</a>
+      <a href="/site/projects.html" aria-current="page">Projects</a>
+      <a href="/site/cevap.html" tabindex="-1" aria-hidden="true"> </a>
+    </nav>
+    <h1 class="sr-only">Maps</h1>
+  </header>
+
+  <main class="page">
+    <div class="atlas">
+      <div class="atlas-map" data-atlas="map"></div>
+      <canvas class="atlas-fog" data-atlas="fog"></canvas>
+      <div class="atlas-lines" data-atlas="lines"></div>
+      <p class="atlas-status" data-atlas="status" role="status"></p>
+      <div class="atlas-tools" role="group" aria-label="Map tools">
+        <a href="/site/projects.html">Back</a>
+        <button type="button" data-atlas-mode="move" aria-pressed="true">Move</button>
+        <button type="button" data-atlas-mode="paint" aria-pressed="false">Paint</button>
+        <button type="button" data-atlas-mode="erase" aria-pressed="false">Erase</button>
+        <label class="atlas-size">Brush <span data-atlas="size-label">20 km</span>
+          <input type="range" min="2" max="50" step="1" value="20" data-atlas="size">
+        </label>
+        <button type="button" data-atlas="undo" aria-disabled="true">Undo</button>
+        <button type="button" data-atlas="export" aria-disabled="true">Export PNG</button>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>

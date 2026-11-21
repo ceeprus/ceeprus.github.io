@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>MTG</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#1e1e1e" />
+  <link rel="stylesheet" href="/style.css" />
+  <script src="/js/projects.js" defer></script>
+  <link rel="icon" type="image/png" href="/img/favicon-white.png" />
+</head>
+
+<body>
+  <header class="bar ceeNoSelect">
+    <nav aria-label="Main">
+      <a href="/index.html">Home</a>
+      <a href="/site/about.html">About</a>
+      <a href="????????????">404</a>
+      <a href="/site/fun.html">Okayu</a>
+      <a href="/site/projects.html" aria-current="page">Projects</a>
+      <a href="/site/cevap.html" tabindex="-1" aria-hidden="true"> </a>
+    </nav>
+    <h1 class="sr-only">MTG</h1>
+  </header>
+
+  <main class="page">
+    <div class="mtg">
+      <div class="mtg-top">
+        <a class="reset" href="/site/projects.html">Back</a>
+        <label class="mtg-search">
+          <span>Rules</span>
+          <input type="search" data-mtg="filter" placeholder="e.g. trample" autocomplete="off">
+        </label>
+      </div>
+      <details class="mtg-lookup mtg-fold" data-fold="lookup" open>
+        <summary><h3>Card lookup</h3></summary>
+        <form class="mtg-card-form" data-mtg="card-form" role="search">
+          <div class="mtg-combo">
+            <input id="MtgCardInput" type="search" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="MtgCardList" aria-label="Card name" data-mtg="card" placeholder="e.g. Sol Ring" autocomplete="off" spellcheck="false">
+            <ul id="MtgCardList" class="mtg-options" role="listbox" aria-label="Card names" data-mtg="names" hidden></ul>
+          </div>
+          <button type="submit" class="mtg-go">Look up</button>
+        </form>
+        <p class="mtg-card-status" data-mtg="card-status" role="status"></p>
+        <div data-mtg="did-you-mean"></div>
+        <div data-mtg="card-result" hidden></div>
+        <p class="mtg-more">Card data and rulings from <a href="https://scryfall.com" target="_blank" rel="noopener">Scryfall</a>. Full rules: <a href="https://yawgatog.com/resources/magic-rules/" target="_blank" rel="noopener">Yawgatog</a>.</p>
+      </details>
+      <details class="mtg-rules mtg-fold" data-mtg="rules" data-fold="rules" open>
+      <summary><h3>Rules</h3></summary>
+      <nav class="mtg-jump" aria-label="Groups">
+        <a href="#mtg-turn">Turn and game</a>
+        <a href="#mtg-stack">Stack and timing</a>
+        <a href="#mtg-combat">Combat</a>
+        <a href="#mtg-keywords">Keywords</a>
+        <a href="#mtg-actions">Keyword actions</a>
+        <a href="#mtg-types">Card types</a>
+        <a href="#mtg-zones">Cards and zones</a>
+        <a href="#mtg-mana">Mana and color</a>
+        <a href="#mtg-formats">Formats</a>
+        <a href="#mtg-commander">Commander</a>
+        <a href="#mtg-deck">Deckbuilding</a>
+        <a href="#mtg-slang">Slang</a>
+        <a href="#mtg-advanced">Advanced rules</a>
+      </nav>
+      <p class="mtg-empty" data-mtg="empty" hidden>No match.</p>
+      <p class="sr-only" data-mtg="count" role="status"></p>
+
+      <section class="mtg-group" id="mtg-turn">
+        <h3>Turn and game</h3>
+        <dl>
+          <div class="mtg-entry"><dt>Starting a game</dt><dd>20 life each, shuffle, draw 7. A random player picks who goes first. Commander starts at 40 life. <a href="https://mtg.wiki/page/Life" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Mulligan</dt><dd>Don't like your 7? Shuffle and draw 7 again, then put one card on the bottom for each mulligan taken. In multiplayer the first mulligan is free. <a href="https://mtg.wiki/page/Mulligan" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Turn order</dt><dd>Untap, upkeep, draw. Main phase 1. Combat. Main phase 2. End step, cleanup. The player who goes first skips their first draw. <a href="https://mtg.wiki/page/Turn_structure" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Untap step</dt><dd>Untap all your permanents. Nobody can cast anything here. <a href="https://mtg.wiki/page/Untap_step" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Upkeep</dt><dd>Start-of-turn step after untap. "At the beginning of your upkeep" triggers happen here. You can cast instants. <a href="https://mtg.wiki/page/Upkeep" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Land per turn</dt><dd>One land per turn, in your main phase, with the stack empty. Playing a land does not use the stack, so it can't be responded to. <a href="https://mtg.wiki/page/Land" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Summoning sickness</dt><dd>A creature can't attack or use {T} abilities unless you've controlled it since the start of your turn. Haste removes this. <a href="https://mtg.wiki/page/Summoning_sickness" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>End step</dt><dd>"At the beginning of the end step" triggers happen here. Last normal chance to cast instants on this turn. <a href="https://mtg.wiki/page/End_step" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Cleanup</dt><dd>Discard down to 7 cards, then damage on creatures is removed and "until end of turn" effects end. <a href="https://mtg.wiki/page/Cleanup_step" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>How you lose</dt><dd>0 or less life. Drawing from an empty library. 10 poison counters. In Commander, also 21 combat damage from one commander. <a href="https://mtg.wiki/page/Losing_the_game" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Both hit 0 at once</dt><dd>If every remaining player loses at the same time, the game is a draw. <a href="https://mtg.wiki/page/Draw" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Passing the turn</dt><dd>Saying "go" or "pass" means you're done with your main phase and want to move to your end step. <a href="https://mtg.wiki/page/Turn_structure" target="_blank" rel="noopener">wiki</a></dd></div>
+        </dl>
+      </section>
+
+      <section class="mtg-group" id="mtg-stack">
+        <h3>Stack and timing</h3>
+        <dl>
+          <div class="mtg-entry"><dt>The stack</dt><dd>Spells and abilities wait on the stack. Players can respond. The last one added resolves first. <a href="https://mtg.wiki/page/Stack" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Priority</dt><dd>The top of the stack resolves only after both players pass in a row without adding anything. <a href="https://mtg.wiki/page/Priority" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Responding</dt><dd>"In response" means adding your instant or ability on top, so it resolves before the thing you responded to. <a href="https://mtg.wiki/page/Stack" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Sorcery speed vs instant speed</dt><dd>Sorceries and permanents: your main phase, empty stack. Instants and flash cards: any time you have priority. <a href="https://mtg.wiki/page/Timing" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Opponent's turn</dt><dd>You can cast instants, flash cards and activate abilities on their turn. Sorceries and normal creatures: only on yours. <a href="https://mtg.wiki/page/Timing" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Activated ability</dt><dd>Written "Cost: Effect". You choose when to use it. Uses the stack (mana abilities don't). <a href="https://mtg.wiki/page/Activated_ability" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Triggered ability</dt><dd>Starts with "When", "Whenever" or "At". Goes on the stack by itself when the event happens. <a href="https://mtg.wiki/page/Triggered_ability" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Static ability</dt><dd>Always on while the card is out. No stack, nothing to respond to. <a href="https://mtg.wiki/page/Static_ability" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Mana ability</dt><dd>Adds mana and has no target, like tapping a land. Doesn't use the stack, can't be responded to. <a href="https://mtg.wiki/page/Mana_ability" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Costs can't be responded to</dt><dd>Things paid as a cost (tapping, sacrificing, discarding) happen immediately. Only the effect goes on the stack. <a href="https://mtg.wiki/page/Cost" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Counter</dt><dd>A countered spell does nothing and goes to the graveyard. Lands can't be countered because they aren't spells. <a href="https://mtg.wiki/page/Counter" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Fizzle</dt><dd>If every target is gone or illegal when a spell resolves, it does nothing. <a href="https://mtg.wiki/page/Fizzle" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Split second</dt><dd>While it's on the stack, nobody can cast spells or activate non-mana abilities. Triggers still happen. <a href="https://mtg.wiki/page/Split_second" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>State-based actions</dt><dd>Checked all the time: 0 life loses, creatures with lethal damage or 0 toughness die, legend rule applies. <a href="https://mtg.wiki/page/State-based_action" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Cast vs put onto the battlefield</dt><dd>"Put onto the battlefield" is not casting: it can't be countered and "whenever you cast" doesn't trigger. <a href="https://mtg.wiki/page/Cast" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Copy of a spell</dt><dd>A copy is not cast, so "whenever you cast" doesn't trigger. It goes on the stack and resolves like the original. <a href="https://mtg.wiki/page/Copy" target="_blank" rel="noopener">wiki</a></dd></div>
+        </dl>
+      </section>
+
+      <section class="mtg-group" id="mtg-combat">
+        <h3>Combat</h3>
+        <dl>
+          <div class="mtg-entry"><dt>Combat steps</dt><dd>Beginning of combat, declare attackers, declare blockers, combat damage, end of combat. <a href="https://mtg.wiki/page/Combat_phase" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Attacking</dt><dd>Attackers tap (unless vigilance). Each one attacks a player, a planeswalker or a battle, your choice. <a href="https://mtg.wiki/page/Attack" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Blocking</dt><dd>Each untapped creature blocks at most one attacker. Several can block the same attacker; its controller splits the damage between them. <a href="https://mtg.wiki/page/Block" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Unblocked</dt><dd>An unblocked attacker deals its damage to whatever it attacked. <a href="https://mtg.wiki/page/Block" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Lethal damage</dt><dd>A creature dies once its damage this turn reaches its toughness. <a href="https://mtg.wiki/page/Lethal_damage" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Chump block</dt><dd>Blocking with a creature that will die without killing the attacker, just to save life. <a href="https://mtg.wiki/page/Chump_blocker" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Trade</dt><dd>Two creatures block or fight and both die.</dd></div>
+          <div class="mtg-entry"><dt>Combat trick</dt><dd>An instant cast during combat, usually after blocks, like a pump spell, to win a fight. <a href="https://mtg.wiki/page/Combat_trick" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Attacker removed after blocks</dt><dd>The other creature stays in combat. A blocked attacker stays blocked and deals no damage unless it has trample. <a href="https://mtg.wiki/page/Block" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Tapping a blocker</dt><dd>Tapping a creature after it blocked doesn't remove it from combat. It still deals damage. <a href="https://mtg.wiki/page/Block" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>First strike step</dt><dd>If any creature has first strike or double strike, combat damage happens in two steps. <a href="https://mtg.wiki/page/First_strike" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Planeswalker damage</dt><dd>Damage to a planeswalker removes that many loyalty counters. At 0 loyalty it dies. <a href="https://mtg.wiki/page/Planeswalker" target="_blank" rel="noopener">wiki</a></dd></div>
+        </dl>
+      </section>
+
+      <section class="mtg-group" id="mtg-keywords">
+        <h3>Keywords</h3>
+        <dl>
+          <div class="mtg-entry"><dt>Trample</dt><dd>Damage beyond what kills the blockers goes to the player. With deathtouch, 1 damage per blocker is enough. <a href="https://mtg.wiki/page/Trample" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Deathtouch</dt><dd>Any damage it deals to a creature destroys that creature. <a href="https://mtg.wiki/page/Deathtouch" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Flying</dt><dd>Can only be blocked by creatures with flying or reach. <a href="https://mtg.wiki/page/Flying" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Reach</dt><dd>Can block creatures with flying. <a href="https://mtg.wiki/page/Reach" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>First strike</dt><dd>Deals combat damage before creatures without it. <a href="https://mtg.wiki/page/First_strike" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Double strike</dt><dd>Deals combat damage twice: in the first-strike step and the normal one. <a href="https://mtg.wiki/page/Double_strike" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Lifelink</dt><dd>Damage it deals also gains you that much life. <a href="https://mtg.wiki/page/Lifelink" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Vigilance</dt><dd>Doesn't tap to attack, so it can still block next turn. <a href="https://mtg.wiki/page/Vigilance" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Haste</dt><dd>Can attack and use {T} abilities the turn it comes in. <a href="https://mtg.wiki/page/Haste" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Flash</dt><dd>You can cast it any time you could cast an instant. <a href="https://mtg.wiki/page/Flash" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Menace</dt><dd>Can't be blocked except by two or more creatures. <a href="https://mtg.wiki/page/Menace" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Defender</dt><dd>Can't attack. <a href="https://mtg.wiki/page/Defender" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Hexproof</dt><dd>Your opponents' spells and abilities can't target it. Yours can. <a href="https://mtg.wiki/page/Hexproof" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Shroud</dt><dd>Nobody's spells or abilities can target it, not even yours. <a href="https://mtg.wiki/page/Shroud" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Ward</dt><dd>When an opponent targets it, their spell or ability is countered unless they pay the ward cost. <a href="https://mtg.wiki/page/Ward" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Indestructible</dt><dd>Damage and "destroy" don't kill it. Exile, sacrifice and 0 toughness still do. <a href="https://mtg.wiki/page/Indestructible" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Protection</dt><dd>Protection from X: can't be damaged, enchanted or equipped, blocked or targeted by X. Remember DEBT. <a href="https://mtg.wiki/page/Protection" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Prowess</dt><dd>Whenever you cast a noncreature spell, it gets +1/+1 until end of turn. <a href="https://mtg.wiki/page/Prowess" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Equip</dt><dd>Pay the cost to attach the Equipment to a creature you control. Sorcery speed only. If the creature leaves, the Equipment stays on the battlefield, unattached. <a href="https://mtg.wiki/page/Equip" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Enchant</dt><dd>An Aura's "Enchant creature" says what it can be attached to. If that thing leaves, the Aura goes to the graveyard. <a href="https://mtg.wiki/page/Enchant" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Cycling</dt><dd>Pay the cycling cost and discard the card from your hand: draw a card. Instant speed. <a href="https://mtg.wiki/page/Cycling" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Kicker</dt><dd>Optional extra cost when casting, for a bigger effect. <a href="https://mtg.wiki/page/Kicker" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Flashback</dt><dd>Cast it from your graveyard for the flashback cost. It's exiled afterwards. <a href="https://mtg.wiki/page/Flashback" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Convoke</dt><dd>Each creature you tap while casting pays for {1} or one mana of that creature's color. <a href="https://mtg.wiki/page/Convoke" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Delve</dt><dd>Exile cards from your graveyard while casting. Each one pays {1}. <a href="https://mtg.wiki/page/Delve" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Cascade</dt><dd>When you cast it, exile cards from the top until a nonland card with lower mana value. You may cast that free. The rest go to the bottom. <a href="https://mtg.wiki/page/Cascade" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Landfall</dt><dd>Triggers whenever a land enters under your control. <a href="https://mtg.wiki/page/Landfall" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Infect</dt><dd>Deals damage to creatures as -1/-1 counters and to players as poison counters. <a href="https://mtg.wiki/page/Infect" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Toxic</dt><dd>Toxic N: combat damage to a player also gives them N poison counters. 10 poison loses. <a href="https://mtg.wiki/page/Toxic" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Persist</dt><dd>When it dies, if it had no -1/-1 counters, it returns with a -1/-1 counter. <a href="https://mtg.wiki/page/Persist" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Undying</dt><dd>When it dies, if it had no +1/+1 counters, it returns with a +1/+1 counter. <a href="https://mtg.wiki/page/Undying" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Crew</dt><dd>Crew N: tap creatures with total power N or more to make the Vehicle a creature until end of turn. New creatures can crew. <a href="https://mtg.wiki/page/Crew" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Storm</dt><dd>When you cast it, copy it once for each other spell cast before it this turn. <a href="https://mtg.wiki/page/Storm" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Affinity for artifacts</dt><dd>Costs {1} less for each artifact you control. <a href="https://mtg.wiki/page/Affinity" target="_blank" rel="noopener">wiki</a></dd></div>
+        </dl>
+      </section>
+
+      <section class="mtg-group" id="mtg-actions">
+        <h3>Keyword actions</h3>
+        <dl>
+          <div class="mtg-entry"><dt>Destroy</dt><dd>Put it into its owner's graveyard. Indestructible stops this. Regenerate can replace it. <a href="https://mtg.wiki/page/Destroy" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Exile</dt><dd>Remove it from the game into the exile zone. Doesn't count as dying. <a href="https://mtg.wiki/page/Exile" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Sacrifice</dt><dd>Move your own permanent to the graveyard. You can only sacrifice your own. Indestructible doesn't help. <a href="https://mtg.wiki/page/Sacrifice" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Bounce (return to hand)</dt><dd>Return a permanent to its owner's hand. Tokens bounced this way stop existing. <a href="https://mtg.wiki/page/Bounce" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Fight</dt><dd>Each creature deals damage equal to its power to the other. <a href="https://mtg.wiki/page/Fight" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Scry</dt><dd>Scry N: look at the top N cards, put any on the bottom and the rest back on top in any order. <a href="https://mtg.wiki/page/Scry" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Surveil</dt><dd>Surveil N: look at the top N cards, put any into your graveyard and the rest back on top in any order. <a href="https://mtg.wiki/page/Surveil" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Mill</dt><dd>Mill N: put the top N cards of the library into the graveyard. <a href="https://mtg.wiki/page/Mill" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Discard</dt><dd>Put a card from hand into the graveyard. "Random" means you don't pick. <a href="https://mtg.wiki/page/Discard" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Search (tutor)</dt><dd>Look through your library for a card, then shuffle. You may fail to find if it asks for a quality like "creature". <a href="https://mtg.wiki/page/Tutor" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Proliferate</dt><dd>Choose any permanents and players with counters, give each another counter of a kind it already has. <a href="https://mtg.wiki/page/Proliferate" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Investigate</dt><dd>Create a Clue token. <a href="https://mtg.wiki/page/Investigate" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Transform</dt><dd>Turn a double-faced card to its other face. It stays the same object, not a new one. <a href="https://mtg.wiki/page/Transform" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Create</dt><dd>Make a token. The card tells you its name, type and stats. <a href="https://mtg.wiki/page/Token" target="_blank" rel="noopener">wiki</a></dd></div>
+        </dl>
+      </section>
+
+      <section class="mtg-group" id="mtg-types">
+        <h3>Card types</h3>
+        <dl>
+          <div class="mtg-entry"><dt>Creature</dt><dd>Has power/toughness, can attack and block. Cast at sorcery speed. <a href="https://mtg.wiki/page/Creature" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Instant</dt><dd>A one-shot spell you can cast any time you have priority. <a href="https://mtg.wiki/page/Instant" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Sorcery</dt><dd>A one-shot spell cast only in your main phase with the stack empty. <a href="https://mtg.wiki/page/Sorcery" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Artifact</dt><dd>A permanent. Colorless unless its cost has colored mana. <a href="https://mtg.wiki/page/Artifact" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Enchantment</dt><dd>A permanent with an ongoing effect. <a href="https://mtg.wiki/page/Enchantment" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Aura</dt><dd>An enchantment that attaches to something. It targets when cast. <a href="https://mtg.wiki/page/Aura" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Equipment</dt><dd>An artifact you attach to your creatures with equip. <a href="https://mtg.wiki/page/Equipment" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Vehicle</dt><dd>An artifact that becomes a creature when crewed. <a href="https://mtg.wiki/page/Vehicle" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Land</dt><dd>Plays without the stack, once per turn. Usually taps for mana. Not a spell. <a href="https://mtg.wiki/page/Land" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Basic land</dt><dd>Plains, Island, Swamp, Mountain, Forest (and Wastes). Any number allowed in a deck. <a href="https://mtg.wiki/page/Basic_land" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Planeswalker</dt><dd>Enters with loyalty. Use one loyalty ability per turn, at sorcery speed. Can be attacked. <a href="https://mtg.wiki/page/Planeswalker" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Battle</dt><dd>You cast a Siege, an opponent protects it. Attack it; when the last defense counter is gone, you exile it and may cast its back face free. <a href="https://mtg.wiki/page/Battle" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Saga</dt><dd>Enchantment that gets a lore counter when it enters and after your draw step. Each chapter triggers. Sacrificed after the last one. <a href="https://mtg.wiki/page/Saga" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Legendary</dt><dd>Only one with the same name per player on the battlefield (legend rule). <a href="https://mtg.wiki/page/Legendary" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Kindred (tribal)</dt><dd>A type that lets a non-creature card have creature types, like Kindred Instant - Elf. <a href="https://mtg.wiki/page/Kindred" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Token</dt><dd>A permanent that isn't a card. It stops existing once it leaves the battlefield. <a href="https://mtg.wiki/page/Token" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Treasure</dt><dd>Artifact token: {T}, sacrifice it: add one mana of any color. <a href="https://mtg.wiki/page/Treasure" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Food</dt><dd>Artifact token: {2}, {T}, sacrifice it: gain 3 life. <a href="https://mtg.wiki/page/Food" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Clue</dt><dd>Artifact token: {2}, sacrifice it: draw a card. <a href="https://mtg.wiki/page/Clue" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Double-faced card</dt><dd>Transforming ones enter front face up and flip later. Modal ones (MDFC) let you pick which face to play. <a href="https://mtg.wiki/page/Double-faced_card" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Adventure</dt><dd>Cast the adventure half first. It goes to exile, then you can cast the creature from exile later. <a href="https://mtg.wiki/page/Adventure" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Split card</dt><dd>Two spells on one card. Cast either half (or both with fuse). <a href="https://mtg.wiki/page/Split_card" target="_blank" rel="noopener">wiki</a></dd></div>
+        </dl>
+      </section>
+
+      <section class="mtg-group" id="mtg-zones">
+        <h3>Cards and zones</h3>
+        <dl>
+          <div class="mtg-entry"><dt>Zones</dt><dd>Library, hand, battlefield, graveyard, stack, exile, command. <a href="https://mtg.wiki/page/Zone" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Permanent</dt><dd>Anything on the battlefield: creatures, artifacts, enchantments, lands, planeswalkers, battles. <a href="https://mtg.wiki/page/Permanent" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Enters (ETB)</dt><dd>"When this enters" triggers each time it arrives on the battlefield, cast or not. <a href="https://mtg.wiki/page/Enters_the_battlefield" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Leaves (LTB)</dt><dd>Triggers when it leaves the battlefield for any zone. <a href="https://mtg.wiki/page/Leaves_the_battlefield" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Dies</dt><dd>"Dies" means put into a graveyard from the battlefield. Exile is not dying. <a href="https://mtg.wiki/page/Dies" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Owner vs controller</dt><dd>The owner started the game with the card. Cards always go to their owner's hand, library or graveyard. <a href="https://mtg.wiki/page/Owner" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Legend rule</dt><dd>If you control two legendary permanents with the same name, you keep one and put the other in the graveyard. <a href="https://mtg.wiki/page/Legend_rule" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Tapped</dt><dd>Turned sideways. Tapped creatures can't attack or block, and you can't use {T} abilities. <a href="https://mtg.wiki/page/Tap" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Counters on permanents</dt><dd>+1/+1 and -1/-1 counters cancel each other out in pairs. <a href="https://mtg.wiki/page/Counter_(marker)" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Graveyard</dt><dd>Public. Anyone can look through anyone's graveyard any time. <a href="https://mtg.wiki/page/Graveyard" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Library</dt><dd>Hidden, and you can't change its order unless a card says so. You can count how many cards are left. <a href="https://mtg.wiki/page/Library" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Exile zone</dt><dd>Usually face up and public. Cards there come back only if an effect says so. <a href="https://mtg.wiki/page/Exile" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Damage vs life loss</dt><dd>"Lose life" isn't damage. Lifelink, prevention and protection only care about damage. <a href="https://mtg.wiki/page/Damage" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Mana burn</dt><dd>Doesn't exist anymore. Unused mana just empties. <a href="https://mtg.wiki/page/Mana_burn" target="_blank" rel="noopener">wiki</a></dd></div>
+        </dl>
+      </section>
+
+      <section class="mtg-group" id="mtg-mana">
+        <h3>Mana and color</h3>
+        <dl>
+          <div class="mtg-entry"><dt>Colors</dt><dd>White, blue, black, red, green, written W U B R G. Colorless is not a color. <a href="https://mtg.wiki/page/Color" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Mana value</dt><dd>Total of the mana cost: {2}{G}{G} is 4. X counts as 0 except on the stack. Old name: converted mana cost (CMC). <a href="https://mtg.wiki/page/Mana_value" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Generic mana</dt><dd>A number in a cost, like {3}. Any mana pays it. <a href="https://mtg.wiki/page/Generic_mana" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Colorless mana</dt><dd>The {C} symbol. Only colorless mana pays it, not colored. <a href="https://mtg.wiki/page/Colorless" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Hybrid mana</dt><dd>{W/U} is paid with either color. {2/W} is two generic or one white. <a href="https://mtg.wiki/page/Hybrid_mana" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Phyrexian mana</dt><dd>{W/P} is paid with white mana or 2 life. <a href="https://mtg.wiki/page/Phyrexian_mana" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>X costs</dt><dd>You choose X when you cast it and pay that much extra. <a href="https://mtg.wiki/page/X" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Mana pool</dt><dd>Unused mana empties at the end of every step and phase. <a href="https://mtg.wiki/page/Mana_pool" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Color identity</dt><dd>All mana symbols in a card's cost and rules text. Commander uses it for deckbuilding. <a href="https://mtg.wiki/page/Color_identity" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Devotion</dt><dd>Count of a color's mana symbols in the costs of permanents you control. <a href="https://mtg.wiki/page/Devotion" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Guild and color pair names</dt><dd>Azorius WU, Dimir UB, Rakdos BR, Gruul RG, Selesnya GW, Orzhov WB, Izzet UR, Golgari BG, Boros RW, Simic GU. <a href="https://mtg.wiki/page/Guild" target="_blank" rel="noopener">wiki</a></dd></div>
+        </dl>
+      </section>
+
+      <section class="mtg-group" id="mtg-formats">
+        <h3>Formats</h3>
+        <dl>
+          <div class="mtg-entry"><dt>Standard</dt><dd>Recent sets only. Older sets rotate out over time. <a href="https://mtg.wiki/page/Standard" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Pioneer</dt><dd>Return to Ravnica (2012) onward. Doesn't rotate. <a href="https://mtg.wiki/page/Pioneer" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Modern</dt><dd>Eighth Edition (2003) onward. Doesn't rotate. <a href="https://mtg.wiki/page/Modern" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Legacy</dt><dd>Almost every card ever, with a ban list. <a href="https://mtg.wiki/page/Legacy" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Vintage</dt><dd>Every card. The strongest are restricted to one copy instead of banned. <a href="https://mtg.wiki/page/Vintage" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Pauper</dt><dd>Commons only. <a href="https://mtg.wiki/page/Pauper" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Commander (EDH)</dt><dd>Multiplayer, 100-card singleton deck led by a legendary creature, 40 life. <a href="https://mtg.wiki/page/Commander_(format)" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Draft</dt><dd>Players open packs, pick one card and pass, then build 40-card decks from their picks. <a href="https://mtg.wiki/page/Booster_Draft" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Sealed</dt><dd>Open six packs and build a 40-card deck from them. <a href="https://mtg.wiki/page/Sealed_Deck" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Limited vs constructed</dt><dd>Limited: deck built from packs opened at the event. Constructed: deck built beforehand from any legal cards. <a href="https://mtg.wiki/page/Limited" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Banned and restricted</dt><dd>Banned cards can't be in the deck at all. Restricted (Vintage) means one copy max. <a href="https://mtg.wiki/page/Banned" target="_blank" rel="noopener">wiki</a></dd></div>
+        </dl>
+      </section>
+
+      <section class="mtg-group" id="mtg-commander">
+        <h3>Commander</h3>
+        <dl>
+          <div class="mtg-entry"><dt>Deck size</dt><dd>Exactly 100 cards including the commander. Only one copy of each card except basic lands. <a href="https://mtg.wiki/page/Commander_(format)" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Who can be the commander</dt><dd>A legendary creature, or a card that says it can be your commander. <a href="https://mtg.wiki/page/Commander_(format)" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Command zone</dt><dd>Your commander starts there and you can cast it from there. <a href="https://mtg.wiki/page/Command_zone" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Commander tax</dt><dd>Each time you cast it from the command zone, it costs {2} more than the last time. <a href="https://mtg.wiki/page/Commander_tax" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Commander dies or is exiled</dt><dd>You may move it back to the command zone instead. <a href="https://mtg.wiki/page/Commander_(format)" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Commander damage</dt><dd>21 combat damage from the same commander makes a player lose. <a href="https://mtg.wiki/page/Commander_damage" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Color identity rule</dt><dd>Every card in the deck must fit inside your commander's color identity. <a href="https://mtg.wiki/page/Color_identity" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Partner and Background</dt><dd>Lets you run two commanders. Deck is still 100 total. <a href="https://mtg.wiki/page/Partner" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Rule zero</dt><dd>Talk before the game about how strong your decks are and any house rules. <a href="https://mtg.wiki/page/Commander_(format)" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Brackets</dt><dd>Five power levels so decks at a table match: 1 Exhibition, 2 Core, 3 Upgraded, 4 Optimized, 5 cEDH. Still in beta. <a href="https://magic.wizards.com/en/formats/commander" target="_blank" rel="noopener">rules</a></dd></div>
+          <div class="mtg-entry"><dt>Game Changers</dt><dd>A Wizards list of very strong cards. Brackets 1-2: none. Bracket 3: up to 3. Brackets 4-5: any number. Card lookup shows if a card is one. <a href="https://magic.wizards.com/en/formats/commander" target="_blank" rel="noopener">rules</a></dd></div>
+          <div class="mtg-entry"><dt>Bracket limits</dt><dd>No mass land denial in brackets 1-3. No two-card infinite combos in 1-2, none that win early in 3. Extra turns: none in 1, a few never chained in 2-3. Brackets 4-5: anything not banned. <a href="https://magic.wizards.com/en/formats/commander" target="_blank" rel="noopener">rules</a></dd></div>
+          <div class="mtg-entry"><dt>Mass land denial</dt><dd>Cards that destroy, exile, bounce or lock down lots of lands at once, like Armageddon, Winter Orb or Blood Moon. <a href="https://magic.wizards.com/en/formats/commander" target="_blank" rel="noopener">rules</a></dd></div>
+          <div class="mtg-entry"><dt>Commander banned list</dt><dd>Cards nobody can play in Commander, at any bracket. Card lookup shows if a card is banned. <a href="https://magic.wizards.com/en/banned-restricted-list" target="_blank" rel="noopener">rules</a></dd></div>
+        </dl>
+      </section>
+
+      <section class="mtg-group" id="mtg-deck">
+        <h3>Deckbuilding</h3>
+        <dl>
+          <div class="mtg-entry"><dt>Constructed deck size</dt><dd>At least 60 cards. At most 4 copies of a card by name, except basic lands. <a href="https://mtg.wiki/page/Deck" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Sideboard</dt><dd>Up to 15 extra cards you can swap in between games of a match. <a href="https://mtg.wiki/page/Sideboard" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Limited deck size</dt><dd>At least 40 cards. Add as many basic lands as you like. <a href="https://mtg.wiki/page/Limited" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>How many lands</dt><dd>About 24 in 60 cards, 17 in 40 cards, 36 to 38 in Commander. Fewer if your deck is cheap. <a href="https://mtg.wiki/page/Land" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Mana curve</dt><dd>How many cards you have at each mana value. Most decks want a lot of 2s and 3s. <a href="https://mtg.wiki/page/Mana_curve" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Card advantage</dt><dd>Having more useful cards than your opponent. Draw spells and 2-for-1s get it. <a href="https://mtg.wiki/page/Card_advantage" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Tempo</dt><dd>Using your mana and turns more efficiently than the opponent. <a href="https://mtg.wiki/page/Tempo" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Archetypes</dt><dd>Aggro attacks early, control stops things and wins late, midrange is in between, combo wins with a card combination. <a href="https://mtg.wiki/page/Archetype" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Removal</dt><dd>Cards that deal with an opponent's threats: destroy, exile, damage, bounce. <a href="https://mtg.wiki/page/Removal" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Ramp</dt><dd>Getting more mana faster than normal: extra lands, mana creatures, Treasure. <a href="https://mtg.wiki/page/Ramp" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Win condition</dt><dd>The card or plan that actually ends the game. <a href="https://mtg.wiki/page/Win_condition" target="_blank" rel="noopener">wiki</a></dd></div>
+        </dl>
+      </section>
+
+      <section class="mtg-group" id="mtg-slang">
+        <h3>Slang</h3>
+        <dl>
+          <div class="mtg-entry"><dt>ETB / LTB</dt><dd>Enters the battlefield / leaves the battlefield. <a href="https://mtg.wiki/page/Enters_the_battlefield" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>EOT</dt><dd>End of turn. "EOT, I cast this" means during the opponent's end step. <a href="https://mtg.wiki/page/End_step" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>CMC / MV</dt><dd>Converted mana cost, the old name of mana value. <a href="https://mtg.wiki/page/Mana_value" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Mana dork</dt><dd>A cheap creature that taps for mana. <a href="https://mtg.wiki/page/Mana_dork" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Wrath / board wipe</dt><dd>A spell that destroys all creatures, named after Wrath of God. <a href="https://mtg.wiki/page/Wrath" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Burn</dt><dd>Direct damage spells, mostly red. <a href="https://mtg.wiki/page/Burn" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Cantrip</dt><dd>A spell that also draws a card. <a href="https://mtg.wiki/page/Cantrip" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Bomb</dt><dd>A single card that wins games on its own, mostly in Limited. <a href="https://mtg.wiki/page/Bomb" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Staple</dt><dd>A card played in many decks of a format.</dd></div>
+          <div class="mtg-entry"><dt>Mana screw / flood</dt><dd>Screw: not enough lands. Flood: too many lands, not enough spells. <a href="https://mtg.wiki/page/Mana_screw" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Topdeck</dt><dd>The card you just drew, or winning off one. <a href="https://mtg.wiki/page/Topdeck" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Two-for-one</dt><dd>One of your cards dealing with two of theirs. <a href="https://mtg.wiki/page/Two-for-one" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Holding up mana</dt><dd>Leaving lands untapped on your turn to cast instants on theirs. <a href="https://mtg.wiki/page/Instant" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Pump spell</dt><dd>A spell that gives a creature +X/+X. <a href="https://mtg.wiki/page/Pump" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Pinger</dt><dd>A creature that taps to deal 1 damage. <a href="https://mtg.wiki/page/Ping" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Proxy</dt><dd>A stand-in card for a real one. Fine in casual play, not in sanctioned events. <a href="https://mtg.wiki/page/Proxy" target="_blank" rel="noopener">wiki</a></dd></div>
+        </dl>
+      </section>
+
+      <section class="mtg-group" id="mtg-advanced">
+        <h3>Advanced rules</h3>
+        <dl>
+          <div class="mtg-entry"><dt>Layers</dt><dd>Ongoing effects apply in a fixed order: copy, control, text, type, color, abilities, then power/toughness. <a href="https://mtg.wiki/page/Layer" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Power/toughness order</dt><dd>Inside the last layer: abilities that define P/T, then effects that set it, then +N/+N changes and counters, then switching. <a href="https://mtg.wiki/page/Layer" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Timestamps</dt><dd>Inside one layer, older effects apply first and newer ones win. <a href="https://mtg.wiki/page/Timestamp" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Dependency</dt><dd>If one effect changes what another applies to or does, the other waits for it, whatever the timestamps. <a href="https://mtg.wiki/page/Layer" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Replacement effect</dt><dd>Uses "instead", "skip" or "enters with". Changes the event as it happens. No stack, nothing to respond to. <a href="https://mtg.wiki/page/Replacement_effect" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Several replacements at once</dt><dd>The affected player, or the controller of the affected object, picks which one applies first. <a href="https://mtg.wiki/page/Replacement_effect" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Prevention effect</dt><dd>"Prevent the next N damage" is a kind of replacement effect. It only stops damage, not life loss. <a href="https://mtg.wiki/page/Prevention_effect" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>APNAP trigger order</dt><dd>When several players' triggers happen at once, the active player stacks theirs first, then the others in turn order. So the active player's resolve last. <a href="https://mtg.wiki/page/APNAP" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Ordering your triggers</dt><dd>If several of your abilities trigger at once, you choose their order on the stack. <a href="https://mtg.wiki/page/Triggered_ability" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Intervening if</dt><dd>"When X, if Y" checks Y when it triggers and again when it resolves. If Y is false either time, nothing happens. <a href="https://mtg.wiki/page/Intervening_if_clause" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Last known information</dt><dd>If a source has left the battlefield, its ability uses how the source looked the moment it left.</dd></div>
+          <div class="mtg-entry"><dt>What a copy gets</dt><dd>The printed card plus other copy effects. Not counters, Auras, +N/+N effects or tapped status. <a href="https://mtg.wiki/page/Copiable_value" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Characteristic-defining ability</dt><dd>Things like "its power is equal to...". Works in every zone, applied first in its layer. <a href="https://mtg.wiki/page/Characteristic-defining_ability" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Can't beats can</dt><dd>If one effect says something can happen and another says it can't, it can't.</dd></div>
+          <div class="mtg-entry"><dt>Gaining control</dt><dd>A creature you just took can't attack or tap for {T} this turn unless it has haste. <a href="https://mtg.wiki/page/Control" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Casting steps</dt><dd>Announce, choose modes and X, choose targets, work out the total cost, make mana, pay. Only then is it cast. <a href="https://mtg.wiki/page/Cast" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Alternative costs</dt><dd>Flashback, evoke, "without paying its mana cost" and so on. Only one per spell. X is 0 when cast free. <a href="https://mtg.wiki/page/Alternative_cost" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Additional costs</dt><dd>Kicker and similar. Can be paid on top of an alternative cost. <a href="https://mtg.wiki/page/Additional_cost" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Regenerate</dt><dd>The next time it would be destroyed this turn, instead tap it, remove its damage and take it out of combat. <a href="https://mtg.wiki/page/Regenerate" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Phasing</dt><dd>A phased-out permanent is treated as if it doesn't exist. It phases back in on its controller's next untap step. No enter or leave triggers. <a href="https://mtg.wiki/page/Phasing" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Face-down</dt><dd>A face-down spell or permanent is a 2/2 colorless creature with no name, text or cost. Its controller can look at it. <a href="https://mtg.wiki/page/Face-down" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Loops</dt><dd>An optional loop: say how many times you repeat it. A loop nobody can stop is a draw. <a href="https://mtg.wiki/page/Loop" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Commander changing zones</dt><dd>Going to graveyard or exile, it can move to the command zone right after, so "dies" still triggers. Hand or library: it's replaced instead. <a href="https://mtg.wiki/page/Command_zone" target="_blank" rel="noopener">wiki</a></dd></div>
+        </dl>
+      </section>
+      </details>
+    </div>
+  </main>
+</body>
+
+</html>
