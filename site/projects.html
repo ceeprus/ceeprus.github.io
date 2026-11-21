@@ -197,11 +197,24 @@
       <div class="mtg-top">
         <button type="button" class="reset" data-view="index">Back</button>
         <label class="mtg-search">
-          <span class="sr-only">Search</span>
-          <input type="search" data-mtg="filter" placeholder="Search, e.g. trample" autocomplete="off">
+          <span>Rules</span>
+          <input type="search" data-mtg="filter" placeholder="e.g. trample" autocomplete="off">
         </label>
       </div>
-      <p class="mtg-more">Card rulings: <a href="https://scryfall.com" target="_blank" rel="noopener">Scryfall</a>. Full rules: <a href="https://yawgatog.com/resources/magic-rules/" target="_blank" rel="noopener">Yawgatog</a>.</p>
+      <section class="mtg-lookup">
+        <h3><label for="MtgCardInput">Card lookup</label></h3>
+        <form class="mtg-card-form" data-mtg="card-form" role="search">
+          <div class="mtg-combo">
+            <input id="MtgCardInput" type="search" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="MtgCardList" data-mtg="card" placeholder="e.g. Sol Ring" autocomplete="off" spellcheck="false">
+            <ul id="MtgCardList" class="mtg-options" role="listbox" aria-label="Card names" data-mtg="names" hidden></ul>
+          </div>
+          <button type="submit" class="mtg-go">Look up</button>
+        </form>
+        <p class="mtg-card-status" data-mtg="card-status" role="status"></p>
+        <div data-mtg="did-you-mean"></div>
+        <div data-mtg="card-result" hidden></div>
+        <p class="mtg-more">Card data and rulings from <a href="https://scryfall.com" target="_blank" rel="noopener">Scryfall</a>. Full rules: <a href="https://yawgatog.com/resources/magic-rules/" target="_blank" rel="noopener">Yawgatog</a>.</p>
+      </section>
       <nav class="mtg-jump" aria-label="Groups">
         <a href="#mtg-turn">Turn and game</a>
         <a href="#mtg-stack">Stack and timing</a>
@@ -431,7 +444,12 @@
           <div class="mtg-entry"><dt>Commander damage</dt><dd>21 combat damage from the same commander makes a player lose. <a href="https://mtg.wiki/page/Commander_damage" target="_blank" rel="noopener">wiki</a></dd></div>
           <div class="mtg-entry"><dt>Color identity rule</dt><dd>Every card in the deck must fit inside your commander's color identity. <a href="https://mtg.wiki/page/Color_identity" target="_blank" rel="noopener">wiki</a></dd></div>
           <div class="mtg-entry"><dt>Partner and Background</dt><dd>Lets you run two commanders. Deck is still 100 total. <a href="https://mtg.wiki/page/Partner" target="_blank" rel="noopener">wiki</a></dd></div>
-          <div class="mtg-entry"><dt>Brackets and rule zero</dt><dd>Talk before the game about how strong decks are, so the table matches. Brackets 1-5 give a shared scale. <a href="https://mtg.wiki/page/Commander_(format)" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Rule zero</dt><dd>Talk before the game about how strong your decks are and any house rules. <a href="https://mtg.wiki/page/Commander_(format)" target="_blank" rel="noopener">wiki</a></dd></div>
+          <div class="mtg-entry"><dt>Brackets</dt><dd>Five power levels so decks at a table match: 1 Exhibition, 2 Core, 3 Upgraded, 4 Optimized, 5 cEDH. Still in beta. <a href="https://magic.wizards.com/en/formats/commander" target="_blank" rel="noopener">rules</a></dd></div>
+          <div class="mtg-entry"><dt>Game Changers</dt><dd>A Wizards list of very strong cards. Brackets 1-2: none. Bracket 3: up to 3. Brackets 4-5: any number. Card lookup shows if a card is one. <a href="https://magic.wizards.com/en/formats/commander" target="_blank" rel="noopener">rules</a></dd></div>
+          <div class="mtg-entry"><dt>Bracket limits</dt><dd>No mass land denial in brackets 1-3. No two-card infinite combos in 1-2, none that win early in 3. Extra turns: none in 1, a few never chained in 2-3. Brackets 4-5: anything not banned. <a href="https://magic.wizards.com/en/formats/commander" target="_blank" rel="noopener">rules</a></dd></div>
+          <div class="mtg-entry"><dt>Mass land denial</dt><dd>Cards that destroy, exile, bounce or lock down lots of lands at once, like Armageddon, Winter Orb or Blood Moon. <a href="https://magic.wizards.com/en/formats/commander" target="_blank" rel="noopener">rules</a></dd></div>
+          <div class="mtg-entry"><dt>Commander banned list</dt><dd>Cards nobody can play in Commander, at any bracket. Card lookup shows if a card is banned. <a href="https://magic.wizards.com/en/banned-restricted-list" target="_blank" rel="noopener">rules</a></dd></div>
         </dl>
       </section>
 
