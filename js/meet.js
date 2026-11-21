@@ -926,6 +926,7 @@ export function start(area) {
       var button = document.createElement("button");
       button.type = "button";
       button.className = "meet-name";
+      button.dataset.name = name;
       button.append(avatar(name, picFor(name)), name);
       item.appendChild(button);
       target.appendChild(item);
@@ -971,7 +972,7 @@ export function start(area) {
 
   function onNameOver(e) {
     var button = e.target.closest(".meet-name");
-    if (button) solo(button.textContent.slice(1));
+    if (button) solo(button.dataset.name);
   }
 
   function onNameOut() {
