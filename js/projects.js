@@ -6,7 +6,7 @@
     return;
   }
 
-  var V = "?v=3";
+  var V = "?v=4";
   var FOLDS = "mtg-folds";
   var autoOpened = false;
 
