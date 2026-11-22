@@ -6,6 +6,7 @@
     return;
   }
 
+  var V = "?v=3";
   var FOLDS = "mtg-folds";
   var autoOpened = false;
 
@@ -33,10 +34,10 @@
       fail: "Could not load the map. Check your connection.",
       load: function () {
         return Promise.all([
-          addTag("link", { rel: "stylesheet", href: "/vendor/maplibre-gl.css" }),
-          addTag("script", { src: "/vendor/maplibre-gl.js" })
-            .then(function () { return addTag("script", { src: "/js/atlas-core.js" }); })
-            .then(function () { return addTag("script", { src: "/js/atlas.js" }); })
+          addTag("link", { rel: "stylesheet", href: "/vendor/maplibre-gl.css" + V }),
+          addTag("script", { src: "/vendor/maplibre-gl.js" + V })
+            .then(function () { return addTag("script", { src: "/js/atlas-core.js" + V }); })
+            .then(function () { return addTag("script", { src: "/js/atlas.js" + V }); })
         ]);
       },
       start: function (area) { return Atlas.start(area); }
@@ -46,7 +47,7 @@
       status: '[data-meet="status"]',
       fail: "Could not load Meet. Check your connection.",
       load: function () {
-        return addTag("script", { src: "/js/meet-core.js" }).then(function () { return import("/js/meet.js"); });
+        return addTag("script", { src: "/js/meet-core.js" + V }).then(function () { return import("/js/meet.js" + V); });
       },
       start: function (area, module) { return module.start(area); }
     },
@@ -54,7 +55,7 @@
       area: ".mtg",
       status: '[data-mtg="card-status"]',
       fail: "Could not load card lookup. Check your connection.",
-      load: function () { return addTag("script", { src: "/js/mtg.js" }); },
+      load: function () { return addTag("script", { src: "/js/mtg.js" + V }); },
       start: function (area) { return MtgLookup.start(area); }
     }
   ];
@@ -77,6 +78,7 @@
   main.addEventListener("toggle", function (event) {
     var fold = event.target;
     if (!fold.dataset || !fold.dataset.fold) return;
+    fold.dataset.moved = "";
     if (autoOpened && fold.dataset.fold === "rules") {
       autoOpened = false;
       return;

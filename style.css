@@ -1563,7 +1563,7 @@ a.cee-button {
 
 .mtg-search {
   display: flex;
-  flex: 1 1 12rem;
+  flex: 1 1 15rem;
   align-items: center;
   gap: 0.5rem;
   min-width: 0;
@@ -1714,10 +1714,14 @@ a.cee-button {
 }
 
 .mtg-option {
-  display: flex;
-  align-items: center;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
   min-height: 44px;
-  padding: 0.5rem 0.75rem;
+  padding: 0 0.75rem;
+  border-block: 0.65rem solid transparent;
+  overflow-wrap: anywhere;
   border-radius: 6px;
   cursor: pointer;
 }
@@ -1807,6 +1811,11 @@ a.cee-button {
   width: 100%;
   height: auto;
   border-radius: 12px;
+}
+
+.mtg-card-info {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .mtg-card-info p {
@@ -2108,4 +2117,35 @@ a.cee-button {
 
 .mtg-entry dd a:hover {
   color: var(--click-hover);
+}
+
+@keyframes mtg-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .mtg-fold > summary::after {
+    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.15s ease;
+  }
+
+  .mtg-fold[data-moved][open] > :not(summary),
+  .mtg-rulings[open] > :not(summary) {
+    animation: mtg-reveal 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .mtg-card,
+  .mtg-choices {
+    animation: mtg-reveal 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .mtg-chips button {
+    transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease, transform 0.16s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .mtg-chips button:not([aria-disabled="true"]):active {
+    transform: scale(0.97);
+  }
 }

@@ -278,6 +278,7 @@
     function openList(names) {
       list.replaceChildren.apply(list, names.map(function (name, i) {
         var li = el("li", "mtg-option", name);
+        li.title = name;
         li.id = "MtgOption" + i;
         li.setAttribute("role", "option");
         li.setAttribute("aria-selected", "false");
