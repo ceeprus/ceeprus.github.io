@@ -352,147 +352,93 @@ a.cee-button {
 }
 
 .project-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
   gap: var(--gap);
-  margin: 2rem 0 0;
+  max-width: 800px;
+  margin: 2rem auto 0;
   padding: 0;
   list-style: none;
-  --btn: var(--click);
-  --btn-hover: var(--click-hover);
-}
-
-.atlas {
-  position: fixed;
-  inset: 24.5px 0 0 0;
-  background: var(--bg);
   text-align: left;
 }
 
-.atlas .atlas-map {
-  position: absolute;
-  inset: 0;
-}
-
-.atlas-fog {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-.atlas .atlas-lines {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.atlas-brush {
-  position: absolute;
-  top: 0;
-  left: 0;
-  border: 2px solid var(--ink);
-  border-radius: 50%;
-  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.6), inset 0 0 0 1px rgb(0 0 0 / 0.6);
-  pointer-events: none;
-}
-
-.atlas-status {
-  position: absolute;
-  top: 12px;
-  left: 50%;
-  max-width: calc(100% - 24px);
-  margin: 0;
-  padding: 0.4rem 0.8rem;
-  border: 1px solid var(--rule);
-  border-radius: 12px;
-  background: rgb(30 30 30 / 0.92);
-  transform: translateX(-50%);
-  text-align: center;
-}
-
-.atlas-status:empty {
-  display: none;
-}
-
-.atlas-tools {
-  position: absolute;
-  bottom: 40px;
-  left: 12px;
+.project-list li {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem;
-  max-width: calc(100% - 24px);
-  padding: 0.5rem;
-  border: 1px solid var(--rule);
-  border-radius: 12px;
-  background: rgb(30 30 30 / 0.92);
 }
 
-.atlas-tools a {
-  display: inline-flex;
-  align-items: center;
+.project-card {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.25rem var(--gap);
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: #282828;
+  color: var(--ink);
   text-decoration: none;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
 }
 
-.atlas-tools button,
-.atlas-tools a {
-  min-width: 44px;
-  min-height: 44px;
-  padding: 0 0.9rem;
-  border: 1px solid var(--rule);
-  border-radius: 12px;
-  background: transparent;
-  color: var(--ink);
-  font: inherit;
-  cursor: pointer;
+.project-card h2 {
+  margin: 0;
+  color: var(--click-hover);
+  font: 700 1.3rem/1.2 var(--font-head);
 }
 
-.atlas-tools button[aria-pressed="true"] {
-  border-color: var(--click);
-  background: var(--click);
-  color: var(--action-ink);
-  font-weight: 700;
+.project-card p {
+  margin: 0;
+  color: #ccc;
+  line-height: 1.5;
 }
 
-.atlas-tools button[aria-disabled="true"] {
-  opacity: 0.5;
-  cursor: default;
+.project-back:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
 }
 
-.atlas-size {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
+@media (prefers-reduced-motion: no-preference) {
+  .project-back,
+  .mtg-clear {
+    transition: border-color 0.15s ease, color 0.15s ease, transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
 
-.atlas-size input {
-  width: 8rem;
-  accent-color: var(--click);
-}
-
-.atlas .maplibregl-ctrl-attrib.maplibregl-compact {
-  background: rgb(30 30 30 / 0.85);
-}
-
-.atlas .maplibregl-ctrl.maplibregl-ctrl-attrib,
-.atlas .maplibregl-ctrl.maplibregl-ctrl-attrib a {
-  color: var(--ink);
-}
-
-.atlas .maplibregl-ctrl-attrib-button {
-  filter: invert(1);
-}
-
-@media (max-width: 640px) {
-  .atlas-tools {
-    bottom: 64px;
+  .project-back:active,
+  .mtg-clear:active {
+    transform: scale(0.97);
   }
 }
 
+.project-card:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .project-card:hover {
+    border-color: var(--click);
+  }
+
+  .project-card:hover h2 {
+    color: var(--ink);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .project-card {
+    transition: border-color 0.15s ease, transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .project-card h2 {
+    transition: color 0.15s ease;
+  }
+
+  .project-card:active {
+    transform: scale(0.98);
+  }
+}
 
 .meet {
   --cell: #2b2b2b;
@@ -1380,7 +1326,8 @@ a.cee-button {
   .meet-select-btn,
   .meet .meet-search,
   .meet-clock button,
-  .meet-month-pick {
+  .meet-month-pick,
+  .meet-pick-cell {
     min-height: 44px;
   }
 
@@ -1524,8 +1471,6 @@ a.cee-button {
   --surface: #282828;
   --line: #4a4a4a;
   --muted: #aaa;
-  max-width: 72ch;
-  margin-inline: auto;
   text-align: left;
   -webkit-user-select: none;
   user-select: none;
@@ -1541,44 +1486,54 @@ a.cee-button {
   user-select: text;
 }
 
-.mtg-top {
+.mtg-entry dd a {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.project-top {
   position: sticky;
   top: 0;
   z-index: 3;
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  align-items: center;
+  align-items: start;
+  gap: 0.5rem;
   padding: 0.5rem 0;
   background: var(--bg);
+  text-align: left;
 }
 
-.mtg-top .reset {
-  display: inline-flex;
+.project-float {
+  margin-bottom: -60px;
+  background: none;
+  pointer-events: none;
+}
+
+.project-float > * {
+  pointer-events: auto;
+}
+
+.project-float[data-stuck] {
+  background: var(--bg);
+  pointer-events: auto;
+}
+
+.project-back {
+  box-sizing: border-box;
+  display: flex;
+  flex: none;
   align-items: center;
-  margin: 0;
   min-height: 44px;
+  margin: 0;
+  padding-block: 0;
+  background: var(--bg);
   text-decoration: none;
 }
 
-.mtg-search {
-  display: flex;
-  flex: 1 1 15rem;
-  align-items: center;
-  gap: 0.5rem;
-  min-width: 0;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.mtg-search span {
-  white-space: nowrap;
-}
-
-.mtg-search input {
-  flex: 1 1 auto;
-  min-width: 0;
-  font-weight: 400;
+.mtg > .mtg-lookup,
+.mtg > .mtg-rules {
+  max-width: 72ch;
+  margin-inline: auto;
 }
 
 .mtg input[type="search"] {
@@ -1669,7 +1624,94 @@ a.cee-button {
 
 .mtg-card-form {
   display: flex;
+  flex: 1 1 auto;
+  align-items: start;
   gap: 0.5rem;
+  min-width: 0;
+}
+
+@media (min-width: 1200px) {
+  .mtg {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 46rem);
+    grid-template-areas: "top top" "rules side";
+    align-items: start;
+    column-gap: 1.5rem;
+  }
+
+  .mtg > .project-top {
+    grid-area: top;
+    display: grid;
+    grid-template-columns: subgrid;
+  }
+
+  .mtg > .project-top > .project-back {
+    justify-self: start;
+  }
+
+  .mtg > .mtg-rules {
+    grid-area: rules;
+    max-width: none;
+  }
+
+  .mtg > .mtg-lookup {
+    grid-area: side;
+    max-width: none;
+  }
+}
+
+.mtg-lookup {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 1rem;
+  padding: var(--gap);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.mtg-lookup:not(:has(.mtg-card-status:not(:empty), .mtg-choices, [data-mtg="card-result"]:not([hidden]))) {
+  display: none;
+}
+
+.mtg-lookup > * {
+  flex: 1 0 100%;
+  min-width: 0;
+}
+
+.mtg-lookup > .mtg-card-status {
+  flex: 1 1 0;
+  order: -1;
+  margin: 0;
+}
+
+.mtg-lookup > .mtg-clear {
+  flex: none;
+}
+
+.mtg-clear {
+  display: block;
+  min-height: 44px;
+  margin: calc(-0.5 * var(--gap)) calc(-0.5 * var(--gap)) 0 auto;
+  padding: 0 0.75rem;
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  color: var(--muted);
+  font: 700 0.95rem/1 var(--font);
+  cursor: pointer;
+}
+
+.mtg-clear:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .mtg-clear:hover {
+    color: var(--ink);
+  }
 }
 
 .mtg-combo {
@@ -1697,33 +1739,40 @@ a.cee-button {
 }
 
 .mtg-options {
-  position: absolute;
-  z-index: 2;
-  top: calc(100% + 4px);
-  left: 0;
-  right: 0;
-  max-height: 18rem;
-  margin: 0;
+  margin: 4px 0 0;
   padding: 4px;
-  overflow-y: auto;
   list-style: none;
   border: 1px solid var(--rule);
   border-radius: 10px;
   background: var(--bg);
-  box-shadow: 0 8px 24px rgb(0 0 0 / 50%);
 }
 
 .mtg-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 44px;
+  padding: 4px 0.75rem 4px 4px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.mtg-thumb {
+  flex: none;
+  width: 32px;
+  height: 45px;
+  border-radius: 3px;
+  background: var(--surface);
+  object-fit: cover;
+}
+
+.mtg-option-name {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  min-width: 0;
   overflow: hidden;
-  min-height: 44px;
-  padding: 0 0.75rem;
-  border-block: 0.65rem solid transparent;
   overflow-wrap: anywhere;
-  border-radius: 6px;
-  cursor: pointer;
 }
 
 .mtg-option[aria-selected="true"] {
@@ -1796,7 +1845,7 @@ a.cee-button {
   grid-template-columns: minmax(0, 244px) minmax(0, 1fr);
   gap: var(--gap);
   align-items: start;
-  margin-top: 1rem;
+  margin-top: 0.25rem;
 }
 
 .mtg-card-pics {
@@ -1896,13 +1945,14 @@ a.cee-button {
 
 .mtg-legal {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 12rem), 1fr));
   gap: 0 1rem;
   margin: 0;
 }
 
 .mtg-legal-row {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   gap: 0.5rem;
@@ -1923,6 +1973,7 @@ a.cee-button {
 }
 
 .mtg-status[data-status="not_legal"] {
+  padding-inline: 0;
   color: var(--muted);
 }
 
@@ -2056,7 +2107,15 @@ a.cee-button {
 
 .mtg-chips button[aria-disabled="true"] {
   opacity: 0.45;
-  cursor: default;
+  cursor: not-allowed;
+}
+
+.mtg-chips button[aria-pressed="true"][aria-disabled="true"] {
+  cursor: pointer;
+}
+
+.meet button:disabled {
+  cursor: not-allowed;
 }
 
 .mtg-chips button:focus-visible {

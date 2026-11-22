@@ -6,7 +6,14 @@
     return;
   }
 
-  var V = "?v=4";
+  var float = main.querySelector(".project-float");
+  if (float) {
+    var onScroll = function () { float.toggleAttribute("data-stuck", scrollY > 0); };
+    addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+
+  var V = "?v=16";
   var FOLDS = "mtg-folds";
   var autoOpened = false;
 
@@ -28,20 +35,6 @@
   }
 
   var tools = [
-    {
-      area: ".atlas",
-      status: '[data-atlas="status"]',
-      fail: "Could not load the map. Check your connection.",
-      load: function () {
-        return Promise.all([
-          addTag("link", { rel: "stylesheet", href: "/vendor/maplibre-gl.css" + V }),
-          addTag("script", { src: "/vendor/maplibre-gl.js" + V })
-            .then(function () { return addTag("script", { src: "/js/atlas-core.js" + V }); })
-            .then(function () { return addTag("script", { src: "/js/atlas.js" + V }); })
-        ]);
-      },
-      start: function (area) { return Atlas.start(area); }
-    },
     {
       area: ".meet",
       status: '[data-meet="status"]',
@@ -94,7 +87,7 @@
 
   function filterRules() {
     var clean = function (text) { return text.toLowerCase().replace(/[‘’]/g, "'").replace(/[^a-z0-9']+/g, " "); };
-    var words = clean(main.querySelector('[data-mtg="filter"]').value).trim().split(/\s+/);
+    var words = clean(main.querySelector('[data-mtg="card"]').value).trim().split(/\s+/);
     var searching = words.join("") !== "";
     var total = 0;
     var shown = 0;
@@ -135,6 +128,6 @@
   });
 
   main.addEventListener("input", function (event) {
-    if (event.target.matches('[data-mtg="filter"]')) filterRules();
+    if (event.target.matches('[data-mtg="card"]')) filterRules();
   });
 })();

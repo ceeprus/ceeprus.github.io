@@ -47,8 +47,12 @@
     return row[b.length];
   }
 
+  function plain(text) {
+    return text.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  }
+
   function closest(query, names, count) {
-    var q = query.toLowerCase().trim();
+    var q = plain(query).trim();
     var qWords = q.split(/[^a-z0-9']+/).filter(Boolean);
     var seen = {};
     return names
@@ -58,7 +62,7 @@
         return true;
       })
       .map(function (name, index) {
-        var n = name.toLowerCase();
+        var n = plain(name);
         var words = n.split(/[^a-z0-9']+/);
         var exact = qWords.length && qWords.every(function (w) { return words.indexOf(w) !== -1; });
         var score = exact ? 0 : Math.min(distance(q, n), distance(q, n.slice(0, q.length)) + 1);
@@ -67,6 +71,20 @@
       .sort(function (a, b) { return a.score - b.score || a.index - b.index; })
       .slice(0, count)
       .map(function (item) { return item.name; });
+  }
+
+  function suggestNames(query, popular, extra, count) {
+    var clean = function (text) { return " " + plain(text).replace(/[^a-z0-9']+/g, " "); };
+    var words = clean(query).trim().split(" ").filter(Boolean);
+    var all = [];
+    popular.concat(extra).forEach(function (name) {
+      if (all.indexOf(name) === -1 && !/^(.+) \/\/ \1$/.test(name)) all.push(name);
+    });
+    var hits = all.filter(function (name) {
+      var n = clean(name);
+      return words.every(function (w) { return n.indexOf(" " + w) !== -1; });
+    });
+    return hits.length ? hits.slice(0, count) : closest(query, all, count);
   }
 
   function loadSymbols() {
@@ -239,10 +257,13 @@
     var status = area.querySelector('[data-mtg="card-status"]');
     var more = area.querySelector('[data-mtg="did-you-mean"]');
     var slot = area.querySelector('[data-mtg="card-result"]');
+    var clear = area.querySelector('[data-mtg="clear"]');
     var timer = 0;
     var suggest = null;
     var lookup = null;
     var active = -1;
+    var pressed = false;
+    var closeAfterPress = false;
 
     loadSymbols().then(function (map) { decorate(area, map); });
 
@@ -252,7 +273,7 @@
 
     function setActive(index) {
       var items = options();
-      active = items.length ? (index + items.length) % items.length : -1;
+      active = items.length && index >= 0 ? index % items.length : -1;
       items.forEach(function (item, i) { item.setAttribute("aria-selected", String(i === active)); });
       if (active >= 0) {
         input.setAttribute("aria-activedescendant", items[active].id);
@@ -275,9 +296,18 @@
       suggest = null;
     }
 
-    function openList(names) {
+    function openList(names, thumbs) {
       list.replaceChildren.apply(list, names.map(function (name, i) {
-        var li = el("li", "mtg-option", name);
+        var li = el("li", "mtg-option");
+        var thumb = thumbs[name] ? el("img", "mtg-thumb") : el("span", "mtg-thumb");
+        if (thumbs[name]) {
+          thumb.src = thumbs[name];
+          thumb.alt = "";
+          thumb.width = 32;
+          thumb.height = 45;
+          thumb.decoding = "async";
+        }
+        li.append(thumb, el("span", "mtg-option-name", name));
         li.title = name;
         li.id = "MtgOption" + i;
         li.setAttribute("role", "option");
@@ -373,9 +403,27 @@
       }
       timer = setTimeout(function () {
         suggest = new AbortController();
-        getJson(API + "/cards/autocomplete?q=" + encodeURIComponent(query), suggest.signal).then(function (data) {
+        var signal = suggest.signal;
+        var safe = function (request) {
+          return request.catch(function (error) {
+            if (error.name === "AbortError") throw error;
+            return [];
+          });
+        };
+        var search = API + "/cards/search?order=edhrec&unique=cards&q=" + encodeURIComponent('name:"' + query.replace(/"/g, "") + '"');
+        var thumbs = {};
+        Promise.all([
+          safe(getJson(search, signal).then(function (d) {
+            return (d.data || []).map(function (card) {
+              var face = card.image_uris || (card.card_faces && card.card_faces[0].image_uris);
+              if (face) thumbs[card.name] = face.small;
+              return card.name;
+            });
+          })),
+          safe(getJson(API + "/cards/autocomplete?q=" + encodeURIComponent(query), signal).then(function (d) { return d.data || []; }))
+        ]).then(function (lists) {
           if (input.value.trim() !== query || document.activeElement !== input) return;
-          openList(closest(query, data.data || [], 8));
+          openList(suggestNames(query, lists[0], lists[1], 8), thumbs);
         }).catch(function () {});
       }, 200);
     }
@@ -390,7 +438,7 @@
       if (event.key === "ArrowDown" || event.key === "ArrowUp") {
         if (!open) return;
         event.preventDefault();
-        setActive(active + (event.key === "ArrowDown" ? 1 : -1));
+        setActive(event.key === "ArrowDown" ? active + 1 : active < 0 ? options().length - 1 : active - 1);
       } else if (event.key === "Enter" && open && active >= 0) {
         event.preventDefault();
         pick(options()[active].textContent);
@@ -417,7 +465,26 @@
 
     function onBlur() {
       cancelSuggest();
-      closeList();
+      if (pressed) closeAfterPress = true;
+      else closeList();
+    }
+
+    function onPressEnd() {
+      pressed = false;
+      if (!closeAfterPress) return;
+      closeAfterPress = false;
+      setTimeout(function () {
+        if (document.activeElement !== input) closeList();
+      }, 0);
+    }
+
+    function onClear() {
+      if (lookup) lookup.abort();
+      status.textContent = "";
+      more.replaceChildren();
+      slot.hidden = true;
+      slot.replaceChildren();
+      input.focus();
     }
 
     function onSubmit(event) {
@@ -428,11 +495,16 @@
     input.addEventListener("input", onInput);
     input.addEventListener("keydown", onKey);
     input.addEventListener("blur", onBlur);
+    document.addEventListener("pointerdown", function () { pressed = true; }, true);
+    document.addEventListener("pointerup", onPressEnd, true);
+    document.addEventListener("pointercancel", onPressEnd, true);
     list.addEventListener("pointerdown", onListDown);
     list.addEventListener("click", onListClick);
     more.addEventListener("click", onMoreClick);
     form.addEventListener("submit", onSubmit);
+    clear.addEventListener("click", onClear);
+    if (matchMedia("(min-width: 1200px)").matches) find("Urza, Lord High Artificer");
   }
 
-  window.MtgLookup = { start: start, closest: closest, distance: distance };
+  window.MtgLookup = { start: start, closest: closest, distance: distance, suggestNames: suggestNames };
 })();
