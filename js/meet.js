@@ -136,7 +136,7 @@ function avatar(name, pic) {
   var box = document.createElement("span");
   box.className = "meet-avatar";
   box.setAttribute("aria-hidden", "true");
-  box.textContent = name.charAt(0).toUpperCase();
+  box.textContent = (Array.from(name)[0] || "").toUpperCase();
   if (isPic(pic)) {
     var img = document.createElement("img");
     img.alt = "";

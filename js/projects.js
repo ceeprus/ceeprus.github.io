@@ -13,7 +13,7 @@
     onScroll();
   }
 
-  var V = "?v=16";
+  var V = "?v=17";
   var FOLDS = "mtg-folds";
   var autoOpened = false;
 
