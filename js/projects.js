@@ -13,7 +13,7 @@
     onScroll();
   }
 
-  var V = "?v=30";
+  var V = "?v=31";
   var FOLDS = "mtg-folds";
   var autoOpened = false;
 
@@ -81,6 +81,7 @@
         if (gap < 0 || gap + chip.offsetWidth > row.clientWidth) row.scrollLeft += gap - 16;
       }
     };
+    addEventListener("dragstart", function (event) { event.preventDefault(); });
     goty.addEventListener("focusin", function (event) {
       if (event.target.matches("[data-cat-pick]")) reveal(event.target);
     });
