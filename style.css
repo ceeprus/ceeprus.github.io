@@ -2129,12 +2129,6 @@ a.cee-button {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .mtg-chips button {
-    transition: none;
-  }
-}
-
 .mtg-empty {
   margin: 1rem 0 0;
 }
@@ -2218,5 +2212,191 @@ a.cee-button {
 
   .mtg-chips button:not([aria-disabled="true"]):active {
     transform: scale(0.97);
+  }
+
+  .goty-chips {
+    scroll-behavior: smooth;
+  }
+}
+
+.goty {
+  --surface: #282828;
+  --muted: #aaa;
+  --gold: #f5c518;
+  --line: #4a4a4a;
+  max-width: 900px;
+  margin-inline: auto;
+  text-align: left;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.goty-intro,
+.goty-note {
+  margin: 0.5rem 0 0;
+  color: var(--muted);
+}
+
+.goty h2 {
+  margin: 1.5rem 0 0;
+  font: 700 1.4rem/1.2 var(--font-head);
+}
+
+.goty h3 {
+  margin: 0;
+  font: 700 1.2rem/1.2 var(--font-head);
+}
+
+.goty-cat-name {
+  display: none;
+  margin: 2.5rem 0 0;
+  font: 700 1.6rem/1.2 var(--font-head);
+}
+
+.goty-past {
+  padding-top: 1rem;
+  border-top: 1px solid #4a4a4a;
+}
+
+.goty-years {
+  display: grid;
+  gap: 1.5rem 2rem;
+  margin-top: 1rem;
+}
+
+.goty-year {
+  min-width: 0;
+}
+
+.goty-row {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.5rem;
+  max-width: 900px;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.goty-now .goty-row {
+  margin-top: 0.75rem;
+}
+
+.goty-game {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.goty-cover {
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.goty-cover img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.goty-cover img.goty-fit {
+  object-fit: contain;
+}
+
+.goty-cover img.goty-logo {
+  box-sizing: border-box;
+  padding: 12%;
+  object-fit: contain;
+}
+
+.goty-name {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 0.8rem;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+}
+
+.goty-who {
+  margin-top: -0.2rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.goty-star {
+  color: var(--gold);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.goty-win .goty-cover {
+  border-color: var(--gold);
+  box-shadow: 0 0 14px rgb(245 197 24 / 0.55);
+}
+
+.goty-since {
+  grid-column: 1 / -1;
+}
+
+.goty-picker {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.goty-chip-row {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  gap: 0.5rem;
+  align-items: start;
+}
+
+.goty-chip-label {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 44px;
+}
+
+@media (max-width: 600px) {
+  .goty-chip-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.25rem;
+  }
+
+  .goty-chip-label {
+    line-height: 1.3;
+  }
+}
+
+@media (min-width: 1400px) {
+  .goty {
+    max-width: 1600px;
+  }
+
+  .goty-years {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .goty-row {
+    grid-template-columns: repeat(auto-fill, minmax(max(3.75rem, calc((100% - 1rem) / 3)), 1fr));
+  }
+}
+
+@media (max-width: 360px) {
+  .goty-name {
+    font-size: 0.72rem;
   }
 }

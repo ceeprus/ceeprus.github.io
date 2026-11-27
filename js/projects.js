@@ -13,7 +13,7 @@
     onScroll();
   }
 
-  var V = "?v=17";
+  var V = "?v=30";
   var FOLDS = "mtg-folds";
   var autoOpened = false;
 
@@ -62,6 +62,44 @@
         area.querySelector(tool.status).textContent = tool.fail;
       });
   });
+
+  var goty = main.querySelector(".goty");
+  if (goty) {
+    var showCat = function (key) {
+      var cat = goty.querySelector('[data-cat="' + key + '"]');
+      if (!cat) return;
+      goty.querySelectorAll("[data-cat]").forEach(function (each) { each.hidden = each !== cat; });
+      goty.querySelectorAll("[data-cat-pick]").forEach(function (chip) {
+        chip.setAttribute("aria-pressed", String(chip.dataset.catPick === key));
+      });
+      reveal(goty.querySelector('[data-cat-pick="' + key + '"]'));
+    };
+    var reveal = function (chip) {
+      var row = chip.parentElement;
+      if (row.scrollWidth > row.clientWidth) {
+        var gap = chip.getBoundingClientRect().left - row.getBoundingClientRect().left;
+        if (gap < 0 || gap + chip.offsetWidth > row.clientWidth) row.scrollLeft += gap - 16;
+      }
+    };
+    goty.addEventListener("focusin", function (event) {
+      if (event.target.matches("[data-cat-pick]")) reveal(event.target);
+    });
+    goty.addEventListener("error", function (event) {
+      if (event.target.tagName === "IMG") event.target.remove();
+    }, true);
+    goty.querySelectorAll(".goty-cover img").forEach(function (img) {
+      if (img.complete && !img.naturalWidth) img.remove();
+    });
+    showCat(location.hash.slice(1));
+    addEventListener("hashchange", function () { showCat(location.hash.slice(1) || "goty"); });
+
+    goty.addEventListener("click", function (event) {
+      var chip = event.target.closest("[data-cat-pick]");
+      if (!chip) return;
+      showCat(chip.dataset.catPick);
+      history.replaceState(null, "", chip.dataset.catPick === "goty" ? location.pathname : "#" + chip.dataset.catPick);
+    });
+  }
 
   var folds = readFolds();
   main.querySelectorAll("[data-fold]").forEach(function (fold) {
