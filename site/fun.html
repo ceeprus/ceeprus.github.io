@@ -84,6 +84,7 @@
     var RESET_WINDOW_MS = 5000;
     var resetPresses = 0;
     var resetTimer = null;
+    var resetAt = 0;
 
     var upgrades = [
       { basePrice: 5, growth: 1.15, gain: 1, count: 0 },
@@ -172,7 +173,8 @@
           Okayu: Okayu,
           counts: upgrades.map(upgrade => upgrade.count),
           clickCounts: clickUpgrades.map(upgrade => upgrade.count),
-          savedAt: lastTick
+          savedAt: lastTick,
+          resetAt: resetAt
         }));
       } catch (error) {
       }
@@ -193,6 +195,31 @@
         restoreCounts(upgrades, data.counts);
         restoreCounts(clickUpgrades, data.clickCounts);
         if (Number.isFinite(data.savedAt)) lastTick = Math.min(data.savedAt, Date.now());
+        if (Number.isFinite(data.resetAt)) resetAt = data.resetAt;
+      } catch (error) {
+      }
+    }
+
+    function mergeCounts(list, counts) {
+      list.forEach((upgrade, index) => {
+        var count = Array.isArray(counts) ? counts[index] : 0;
+        if (Number.isSafeInteger(count) && count > upgrade.count) upgrade.count = Math.min(count, 1000);
+      });
+    }
+
+    function merge(value) {
+      try {
+        var data = JSON.parse(value);
+        if (!data || !Number.isFinite(data.Okayu) || !Array.isArray(data.counts)) return;
+        if (Number.isFinite(data.resetAt) && data.resetAt > resetAt) {
+          var tick = lastTick;
+          load();
+          lastTick = tick;
+          return;
+        }
+        Okayu = Math.max(Okayu, data.Okayu);
+        mergeCounts(upgrades, data.counts);
+        mergeCounts(clickUpgrades, data.clickCounts);
       } catch (error) {
       }
     }
@@ -223,6 +250,7 @@
       upgrades.forEach(upgrade => upgrade.count = 0);
       clickUpgrades.forEach(upgrade => upgrade.count = 0);
       lastTick = Date.now();
+      resetAt = lastTick;
       updateDisplay();
       save();
     }
@@ -256,7 +284,7 @@
     });
     window.addEventListener("storage", function (event) {
       if (event.key === SAVE_KEY) {
-        load();
+        merge(event.newValue);
         updateDisplay();
       }
     });
